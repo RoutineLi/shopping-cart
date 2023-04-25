@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package device;
+option go_package="./device";
+
+service Device{
+  rpc SendMessage(SendMessageRequest) returns(SendMessageResponse);
+}
+
+message SendMessageRequest{
+  string DeviceKey = 2;
+  string Msg = 3;
+}
+
+message SendMessageResponse{
+  string Msg = 2;
+}

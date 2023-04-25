@@ -1,0 +1,13 @@
+Name: open-api
+Host: 0.0.0.0
+Port: 16010
+DeviceRPC:
+  Etcd:
+    Hosts:
+      - 192.168.0.101:12379
+    Key: device.rpc
+UserRPC:
+  Etcd:
+    Hosts:
+      - 192.168.0.101:12379
+    Key: user.rpc

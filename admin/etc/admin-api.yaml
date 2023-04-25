@@ -1,0 +1,10 @@
+Name: admin-api
+Host: 0.0.0.0
+Port: 14010
+UserRpc:
+  Etcd:
+    Hosts:
+      - 192.168.0.101:12379
+    Key: user.rpc
+Redis:
+  Host: 192.168.0.101:6380

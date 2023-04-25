@@ -1,0 +1,78 @@
+type CategroyProductListRequest {
+	Name string `json:"name, optional"`
+}
+
+type CategroyProductListResponse {
+	BaseResponse
+	Data []*ProductBasic `json:"data"`
+}
+
+type GetProductRequest {
+	Id uint `json:"id, optional"`
+}
+
+type GetProductResponse {
+	BaseResponse
+	Data Product `json:"data"`
+}
+
+type GetOnePerCategoryRequest{}
+
+type GetOnePerCategoryResponse {
+	CategroyProductListResponse
+}
+
+type GetProductListRequest {}
+
+type GetProductListResponse {
+	BaseResponse
+	Data []*Product `json:"data"`
+}
+
+type Product {
+	Id            uint    `json:"id"`
+	Name          string  `json:"name"`
+	Img           string  `json:"img"`
+	Price         float64 `json:"price"`
+	Origin        string  `json:"origin"`
+	Brand         string  `json:"brand"`
+	Specification string  `json:"specification"`
+	ShelfLife     string  `json:"shelflife"`
+	Description   string  `json:"description"`
+	Count         int     `json:"count"`
+	Type          string  `json:"type"`
+	Latitude      float64 `json:"latitude"`
+	Longitude     float64 `json:"longitude"`
+	Location      string  `json:"location"`
+}
+
+type ProductBasic {
+	Id    uint   `json:"id"`
+	Name  string `json:"name"`
+	Image string `json:"image"`
+}
+
+type BaseResponse {
+	Status  string `json:"status"`
+	Code    uint   `json:"code"`
+	Message string `json:"message"`
+}
+
+service product-api {
+	//用户获取商品列表根据类别
+	@handler CategoryProductListHandler
+	get /api/commodity/category (CategroyProductListRequest) returns (CategroyProductListResponse)
+	
+	//用户获取单个商品
+	@handler GetProductHandler
+	get /api/commodity/detail (GetProductRequest) returns (GetProductResponse)
+	
+	//每个类别获取一个商品
+	@handler GetOnePerCategoryHandler
+	get /api/commodity/one_per_category (GetOnePerCategoryRequest) returns (GetOnePerCategoryResponse)
+	
+	//获取全部商品
+	@handler GetProductListHandler
+	get /api/commodity/all (GetProductListRequest) returns (GetProductListResponse)
+	
+}

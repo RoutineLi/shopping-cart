@@ -1,0 +1,16 @@
+type SendMessageRequest {
+	AppKey    string `json:"app_key"`
+	DeviceKey string `json:"device_key"`
+	Data      string `json:"data"`
+	Sign      string `json:"sign"`
+}
+
+type SendMessageResponse {
+	Code    uint   `json:"code"`
+	Message string `json:"message"`
+}
+
+service open-api {
+	@handler SendMessageHandler
+	post /api/open/send_msg (SendMessageRequest) returns (SendMessageResponse)
+}

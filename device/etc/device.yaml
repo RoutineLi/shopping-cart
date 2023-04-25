@@ -1,0 +1,18 @@
+Name: device.rpc
+ListenOn: 0.0.0.0:8088
+Etcd:
+  Hosts:
+    - 192.168.0.101:12379
+  Key: device.rpc
+DeviceRPC:
+  Etcd:
+    Hosts:
+    - 192.168.0.101:12379
+    Key: device.rpc
+Mqtt:
+  Broker:
+    tcp://192.168.0.101:1883
+  ClientID:
+    admin-server
+  Password:
+    'lpj2252488'

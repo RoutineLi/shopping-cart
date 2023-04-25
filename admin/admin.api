@@ -1,0 +1,129 @@
+type Device {
+	Name           string `json:"name"`
+	UserId         string `json:"userid"`
+	Key            string `json:"key"`
+	Secret         string `json:"secret"`
+	LastOnlineTime int64  `json:"last_online_time"`
+}
+
+type ProductBasic {
+	Name  string  `json:"name"`
+	Count int     `json:"count"`
+	Price float64 `json:"price"`
+	Img   string  `json:"img"`
+}
+
+type Product {
+	Name          string  `json:"name"`
+	Img           string  `json:"img"`
+	Price         float64 `json:"price"`
+	Origin        string  `json:"origin"`
+	Brand         string  `json:"brand"`
+	Specification string  `json:"specification"`
+	ShelfLife     string  `json:"shelflife"`
+	Description   string  `json:"description"`
+	Count         int     `json:"count"`
+	Type          string  `json:"type"`
+	Latitude      float64 `json:"latitude"`
+	Longitude     float64 `json:"longitude"`
+	Location      string  `json:"location"`
+}
+
+type DeviceListRequest {
+	BaseRequest
+}
+
+type DeviceListResponse {
+	List  []*Device `json:"list"`
+	Count int64     `json:"count"`
+}
+
+type DeviceAddRequest {
+	Name   string `json:"name"`
+	UserId uint `json:"userid"`
+}
+
+type DeviceAddResponse {
+}
+
+type DeviceModifyRequest {
+	Id string `json:"id"`
+	DeviceAddRequest
+}
+
+type DeviceModifyResponse {
+}
+
+type DeviceDeleteRequest {
+	Id string `json:"id"`
+}
+
+type DeviceDeleteResponse {
+}
+
+type ProductListRequest {
+	BaseRequest
+}
+
+type ProductListResponse {
+	List  []*Product `json:"list"`
+	Count int64      `json:"count"`
+}
+
+type ProductAddRequest {
+	BaseRequest
+	Data Product `json:"data"`
+}
+
+type ProductAddResponse {
+}
+
+type ProductModifyRequest {
+	BaseRequest //column
+	Product
+}
+
+type ProductModifyResponse {
+}
+
+type ProductDeleteRequest {
+	BaseRequest
+}
+
+type ProductDeleteResponse {
+}
+
+service admin-api {
+	//获取设备列表
+	@handler DeviceListHandler
+	get /api/admin/device/list(DeviceListRequest) returns (DeviceListResponse)
+	//添加设备
+	@handler DeviceAddHandler
+	post /api/admin/device/create(DeviceAddRequest) returns (DeviceAddResponse)
+	//修改设备
+	@handler DeviceModifyHandler
+	put /api/admin/device/modify(DeviceModifyRequest) returns (DeviceModifyResponse)
+	//删除设备
+	@handler DeviceDeleteHandler
+	delete /api/admin/device/delete(DeviceDeleteRequest) returns (DeviceDeleteResponse)
+	
+	//获取商品列表
+	@handler ProductListHandler
+	get /api/admin/product/list(ProductListRequest) returns (ProductListResponse)
+	//添加商品
+	@handler ProductAddHandler
+	post /api/admin/product/create(ProductAddRequest) returns (ProductAddResponse)
+	//修改商品
+	@handler ProductModifyHandler
+	put /api/admin/product/modify(ProductModifyRequest) returns (ProductModifyResponse)
+	//删除商品
+	@handler ProductDeleteHandler
+	delete /api/admin/product/delete(ProductDeleteRequest) returns (ProductDeleteResponse)
+}
+
+type BaseRequest {
+	Page   uint   `json:"page,optional"`
+	Id     string `json:"id, optional"`
+	Size   uint   `json:",optional"`
+	Name   string `json:"name, optional"`
+}
