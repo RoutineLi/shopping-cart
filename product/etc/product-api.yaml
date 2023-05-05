@@ -1,10 +1,24 @@
 Name: product-api
 Host: 0.0.0.0
-Port: 11451
+Port: 8040
 UserRPC:
   Etcd:
     Hosts:
-      - 192.168.0.101:12379
+      - etcd:2379
     Key: user.rpc
-Redis:
-  Host: 192.168.0.101:6380
+ProductRPC:
+  Etcd:
+    Hosts:
+      - etcd:2379
+    Key: product.rpc
+
+Prometheus:
+  Host: 0.0.0.0
+  Port: 9040
+  Path: /metrics
+
+Telemetry:
+  Name: product.api
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger

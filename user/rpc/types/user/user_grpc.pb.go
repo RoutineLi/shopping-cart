@@ -21,6 +21,9 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	User_Auth_FullMethodName     = "/template.User/Auth"
 	User_OpenAuth_FullMethodName = "/template.User/OpenAuth"
+	User_Ids_FullMethodName      = "/template.User/Ids"
+	User_Detail_FullMethodName   = "/template.User/Detail"
+	User_Mod_FullMethodName      = "/template.User/Mod"
 )
 
 // UserClient is the client API for User service.
@@ -29,6 +32,9 @@ const (
 type UserClient interface {
 	Auth(ctx context.Context, in *UserAuthRequest, opts ...grpc.CallOption) (*UserAuthResponse, error)
 	OpenAuth(ctx context.Context, in *OpenAuthRequest, opts ...grpc.CallOption) (*OpenAuthResponse, error)
+	Ids(ctx context.Context, in *IdsRequest, opts ...grpc.CallOption) (*IdsResponse, error)
+	Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error)
+	Mod(ctx context.Context, in *ModRequest, opts ...grpc.CallOption) (*ModResponse, error)
 }
 
 type userClient struct {
@@ -57,12 +63,42 @@ func (c *userClient) OpenAuth(ctx context.Context, in *OpenAuthRequest, opts ...
 	return out, nil
 }
 
+func (c *userClient) Ids(ctx context.Context, in *IdsRequest, opts ...grpc.CallOption) (*IdsResponse, error) {
+	out := new(IdsResponse)
+	err := c.cc.Invoke(ctx, User_Ids_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error) {
+	out := new(DetailResponse)
+	err := c.cc.Invoke(ctx, User_Detail_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userClient) Mod(ctx context.Context, in *ModRequest, opts ...grpc.CallOption) (*ModResponse, error) {
+	out := new(ModResponse)
+	err := c.cc.Invoke(ctx, User_Mod_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
 type UserServer interface {
 	Auth(context.Context, *UserAuthRequest) (*UserAuthResponse, error)
 	OpenAuth(context.Context, *OpenAuthRequest) (*OpenAuthResponse, error)
+	Ids(context.Context, *IdsRequest) (*IdsResponse, error)
+	Detail(context.Context, *DetailRequest) (*DetailResponse, error)
+	Mod(context.Context, *ModRequest) (*ModResponse, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -75,6 +111,15 @@ func (UnimplementedUserServer) Auth(context.Context, *UserAuthRequest) (*UserAut
 }
 func (UnimplementedUserServer) OpenAuth(context.Context, *OpenAuthRequest) (*OpenAuthResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OpenAuth not implemented")
+}
+func (UnimplementedUserServer) Ids(context.Context, *IdsRequest) (*IdsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Ids not implemented")
+}
+func (UnimplementedUserServer) Detail(context.Context, *DetailRequest) (*DetailResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Detail not implemented")
+}
+func (UnimplementedUserServer) Mod(context.Context, *ModRequest) (*ModResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Mod not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
@@ -125,6 +170,60 @@ func _User_OpenAuth_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_Ids_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IdsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).Ids(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_Ids_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).Ids(ctx, req.(*IdsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_Detail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DetailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).Detail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_Detail_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).Detail(ctx, req.(*DetailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _User_Mod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ModRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).Mod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: User_Mod_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).Mod(ctx, req.(*ModRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -139,6 +238,18 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "OpenAuth",
 			Handler:    _User_OpenAuth_Handler,
+		},
+		{
+			MethodName: "Ids",
+			Handler:    _User_Ids_Handler,
+		},
+		{
+			MethodName: "Detail",
+			Handler:    _User_Detail_Handler,
+		},
+		{
+			MethodName: "Mod",
+			Handler:    _User_Mod_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

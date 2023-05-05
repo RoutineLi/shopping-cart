@@ -8,7 +8,7 @@ type Product struct {
 	gorm.Model
 	Id            uint    `gorm:"column:id; int; autoincrement;" json:"id,optional"`
 	Name          string  `gorm:"column:name; varchar(50);" json:"name"`
-	Img           string  `gorm:"column:img; varchar(50);" json:"img"`
+	Img           string  `gorm:"column:img; varchar(512);" json:"img"`
 	Price         float64 `gorm:"column:price; float;" json:"price"`
 	Origin        string  `gorm:"column:origin; varchar(50);" json:"origin"`
 	Brand         string  `gorm:"column:brand; varchar(20);" json:"brand"`

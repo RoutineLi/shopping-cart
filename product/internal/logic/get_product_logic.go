@@ -2,11 +2,9 @@ package logic
 
 import (
 	"context"
-	"encoding/json"
-	"graduate_design/define"
-	"graduate_design/models"
 	"graduate_design/product/internal/svc"
 	"graduate_design/product/internal/types"
+	"graduate_design/product/rpc/types/product"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -26,44 +24,29 @@ func NewGetProductLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetPro
 }
 
 func (l *GetProductLogic) GetProduct(req *types.GetProductRequest) (resp *types.GetProductResponse, err error) {
-	claim := new(models.Product)
 	resp = new(types.GetProductResponse)
-	jsondata := ""
-	jsondata, _ = l.svcCtx.RedisClient.Hget(define.ProCache, string(req.Id))
-	if jsondata != "" {
-		json.Unmarshal([]byte(jsondata), &resp.Data)
-		resp.Status = "success"
-		resp.Code = 200
-		resp.Message = "获取商品详情成功"
-		return resp, nil
-	}
-	err = l.svcCtx.DB.Model(new(models.Product)).Where("id = ?", req.Id).First(claim).Error
+	rpcReq := &product.DetailRequest{Id: uint32(req.Id)}
+	rpcRsp := &product.DetailResponse{}
+	rpcRsp, err = l.svcCtx.Product.Detail(context.Background(), rpcReq)
 	if err != nil {
-		logx.Error("[DB ERROR]: ", err)
-		resp.Status = "failure"
-		resp.Message = "获取商品详情失败"
-		resp.Code = 400
-		return resp, err
+		return nil, err
 	}
 	resp.Data = types.Product{
-		Id:            claim.Id,
-		Name:          claim.Name,
-		Img:           claim.Img,
-		Price:         claim.Price,
-		Origin:        claim.Origin,
-		Brand:         claim.Brand,
-		Specification: claim.Specification,
-		ShelfLife:     claim.ShelfLife,
-		Description:   claim.Description,
-		Count:         claim.Count,
-		Type:          claim.Type,
-		Latitude:      claim.Latitude,
-		Longitude:     claim.Longitude,
-		Location:      claim.Location,
+		Id:            uint(rpcRsp.Data.Id),
+		Name:          rpcRsp.Data.Name,
+		Img:           rpcRsp.Data.Img,
+		Price:         rpcRsp.Data.Price,
+		Origin:        rpcRsp.Data.Origin,
+		Brand:         rpcRsp.Data.Brand,
+		Specification: rpcRsp.Data.Specification,
+		ShelfLife:     rpcRsp.Data.ShelfLife,
+		Description:   rpcRsp.Data.Description,
+		Count:         int(rpcRsp.Data.Count),
+		Type:          rpcRsp.Data.Type,
+		Latitude:      rpcRsp.Data.Latitude,
+		Longitude:     rpcRsp.Data.Longitude,
+		Location:      rpcRsp.Data.Location,
 	}
-	var temp []byte
-	temp, _ = json.Marshal(resp.Data)
-	l.svcCtx.RedisClient.Hmset(define.ProCache, map[string]string{string(req.Id): string(temp)})
 	resp.Status = "success"
 	resp.Code = 200
 	resp.Message = "获取商品详情成功"

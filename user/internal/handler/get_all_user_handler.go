@@ -9,20 +9,16 @@ import (
 	"graduate_design/user/internal/types"
 )
 
-func UserLoginHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func GetAllUserHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.UserLoginRequest
+		var req types.GetAllUserRequest
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := logic.NewUserLoginLogic(r.Context(), svcCtx)
-		resp, err := l.UserLogin(&req)
-		if resp.Data.Token != ""{
-			w.Header().Set("Token", resp.Data.Token)
-		}
-
+		l := logic.NewGetAllUserLogic(r.Context(), svcCtx)
+		resp, err := l.GetAllUser(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

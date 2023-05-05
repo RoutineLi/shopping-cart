@@ -73,8 +73,7 @@ func (l *DetailLogic) Detail(in *product.DetailRequest) (*product.DetailResponse
 		Location:      claim.Location,
 	}
 	threading.GoSafe(func() {
-		var temp []byte
-		temp, _ = json.Marshal(resp.Data)
+		temp, _ := json.Marshal(resp.Data)
 		l.svcCtx.RedisClient.Setex(strconv.Itoa(int(in.Id))+"P", string(temp), 30*60)
 	})
 	return resp, nil

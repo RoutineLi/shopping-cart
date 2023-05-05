@@ -2,8 +2,7 @@ package logic
 
 import (
 	"context"
-	"gorm.io/gorm"
-	"graduate_design/models"
+	"graduate_design/product/rpc/types/product"
 
 	"graduate_design/product/internal/svc"
 	"graduate_design/product/internal/types"
@@ -27,30 +26,38 @@ func NewGetOnePerCategoryLogic(ctx context.Context, svcCtx *svc.ServiceContext) 
 
 func (l *GetOnePerCategoryLogic) GetOnePerCategory(req *types.GetOnePerCategoryRequest) (resp *types.GetOnePerCategoryResponse, err error) {
 	resp = new(types.GetOnePerCategoryResponse)
-	var datas []types.Product
-	//TODO
-	err = l.svcCtx.DB.Transaction(func(tx *gorm.DB) error {
-		err = l.svcCtx.DB.Model(new(models.Product)).Select("DISTINCT type").Find(&datas).Error
-		if err != nil {
-			return err
-		}
-		for _, p := range datas {
-			var product types.ProductBasic
-			err = l.svcCtx.DB.Model(new(models.Product)).Where("type = ?", p.Type).Find(&product).
-				Limit(1).Error
-			if err != nil {
-				return err
-			}
-			resp.Data = append(resp.Data, &product)
-		}
-		return nil
-	})
+	cateRsp := new(product.CategoriesResponse)
+	IdsRsp := new(product.IdsResponse)
+	cateRsp, err = l.svcCtx.Product.Categories(context.Background(), &product.CategoriesRequest{})
 	if err != nil {
-		logx.Error("[DB ERROR]: ", err)
+		logx.Error("[RPC ERROR]: ", err)
 		resp.Code = 400
 		resp.Status = "failure"
 		resp.Message = err.Error()
 		return resp, err
+	}
+	IdsRsp, err = l.svcCtx.Product.Ids(context.Background(), &product.IdsRequest{})
+	if err != nil {
+		logx.Error("[RPC ERROR]: ", err)
+		resp.Code = 400
+		resp.Status = "failure"
+		resp.Message = err.Error()
+		return resp, err
+	}
+	for _, category := range cateRsp.Categories {
+		for _, id := range IdsRsp.Ids {
+			in := &product.DetailRequest{Id: id}
+			out, _ := l.svcCtx.Product.Detail(context.Background(), in)
+			if out.Data.Type == category {
+				item := &types.ProductBasic{
+					Id:    uint(out.Data.Id),
+					Name:  out.Data.Name,
+					Image: out.Data.Img,
+				}
+				resp.Data = append(resp.Data, item)
+				break
+			}
+		}
 	}
 	resp.Code = 200
 	resp.Status = "success"

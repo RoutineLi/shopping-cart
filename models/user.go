@@ -5,9 +5,9 @@ import "gorm.io/gorm"
 type User struct {
 	gorm.Model
 	Id        uint   `gorm:"column:id; type:int; autoincrement;" json:"id"`
-	Nickname  string `gorm:"column:nickname; type:varchar(50);" json:"nickname"`
+	Nickname  string `gorm:"column:nickname; type:varchar(50);" json:"username"`
 	Password  string `gorm:"column:password; type:varchar(50);" json:"password"`
-	Avatar    string `gorm:"column:avatar; type:varchar(36);" json:"avatar"`
+	Avatar    string `gorm:"column:avatar; type:varchar(512);" json:"avatar"`
 	Motto     string `gorm:"column:motto; type:varchar(50);" json:"motto"`
 	Gender    string `gorm:"column:gender; type:varchar(50);" json:"gender"`
 	Age       uint   `gorm:"column:age; type:int;" json:"age"`

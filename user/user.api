@@ -1,37 +1,38 @@
 type UserLoginRequest {
-	Nickname string `json:"nickname"`
+	Nickname string `json:"username"`
 	Password string `json:"password"`
 }
 
 type UserLoginResponse {
-	Status  string              `json:"status"`
-	Code    uint                `json:"code"`
-	Message string              `json:"message"`
-	Data    UserData			`json:"data"`
+	Status  string   `json:"status"`
+	Code    uint     `json:"code"`
+	Message string   `json:"message"`
+	Data    UserData `json:"data"`
 }
 
-type UserData{
-	Id		 uint   `json:"id"`
+type UserData {
+	Id       uint   `json:"id,optional"`
 	Avatar   string `json:"avatar"`
-	Nickname string `json:"nickname"`
+	Nickname string `json:"username"`
 	Motto    string `json:"motto"`
 	Gender   string `json:"gender"`
 	Age      uint   `json:"age"`
-	Phone    string `json:"phone"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
-	Token 	 string `json:"token"`
+	Phone    string `json:"phone,optional"`
+	Email    string `json:"email,optional"`
+	Password string `json:"password, optional"`
+	Token    string `json:"token, optional"`
 }
 
 type UserRegisterRequest {
 	Avatar   string `json:"avatar"`
-	Nickname string `json:"nickname"`
+	Nickname string `json:"username"`
 	Motto    string `json:"motto"`
 	Gender   string `json:"gender"`
 	Age      uint   `json:"age"`
 	Phone    string `json:"phone"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
+	IsAdmin  uint   `json:"is_admin,optional"`
 }
 
 type UserRegisterResponse {
@@ -40,10 +41,32 @@ type UserRegisterResponse {
 	Message string `json:"message"`
 }
 
+type GetAllUserRequest{}
+
+type GetAllUserResponse {
+	UserRegisterResponse
+	Data []*UserBasic `json:"data"`
+}
+
+type UserBasic {
+	Id       uint   `json:"id,optional"`
+	Avatar   string `json:"avatar"`
+	Nickname string `json:"username"`
+	Motto    string `json:"motto"`
+	Gender   string `json:"gender"`
+	Age      uint   `json:"age"`
+	Phone    string `json:"phone,optional"`
+	Email    string `json:"email,optional"`
+	Password string `json:"password, optional"`
+}
+
 service user-api {
 	@handler UserLoginHandler
 	post /api/user/login (UserLoginRequest) returns (UserLoginResponse)
 	
 	@handler UserRegisterHandler
 	post /api/user/register (UserRegisterRequest) returns (UserRegisterResponse)
+	
+	@handler GetAllUserHandler
+	get /api/user/all (GetAllUserRequest) returns (GetAllUserResponse)
 }

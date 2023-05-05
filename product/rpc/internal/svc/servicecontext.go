@@ -8,16 +8,16 @@ import (
 )
 
 type ServiceContext struct {
-	Config config.Config
-	DB *gorm.DB
+	Config      config.Config
+	DB          *gorm.DB
 	RedisClient *redis.Redis
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
 	models.NewDB()
 	return &ServiceContext{
-		Config: c,
-		DB: models.DB,
-		RedisClient: redis.MustNewRedis(c.Redis),
+		Config:      c,
+		DB:          models.DB,
+		RedisClient: redis.MustNewRedis(c.RedisCli),
 	}
 }

@@ -8,7 +8,7 @@ import (
 
 	"graduate_design/user/rpc/internal/logic"
 	"graduate_design/user/rpc/internal/svc"
-	"graduate_design/user/types/user"
+	"graduate_design/user/rpc/types/user"
 )
 
 type UserServer struct {
@@ -30,4 +30,19 @@ func (s *UserServer) Auth(ctx context.Context, in *user.UserAuthRequest) (*user.
 func (s *UserServer) OpenAuth(ctx context.Context, in *user.OpenAuthRequest) (*user.OpenAuthResponse, error) {
 	l := logic.NewOpenAuthLogic(ctx, s.svcCtx)
 	return l.OpenAuth(in)
+}
+
+func (s *UserServer) Ids(ctx context.Context, in *user.IdsRequest) (*user.IdsResponse, error) {
+	l := logic.NewIdsLogic(ctx, s.svcCtx)
+	return l.Ids(in)
+}
+
+func (s *UserServer) Detail(ctx context.Context, in *user.DetailRequest) (*user.DetailResponse, error) {
+	l := logic.NewDetailLogic(ctx, s.svcCtx)
+	return l.Detail(in)
+}
+
+func (s *UserServer) Mod(ctx context.Context, in *user.ModRequest) (*user.ModResponse, error) {
+	l := logic.NewModLogic(ctx, s.svcCtx)
+	return l.Mod(in)
 }

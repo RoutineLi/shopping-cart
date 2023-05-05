@@ -6,6 +6,6 @@ import (
 )
 
 type Config struct {
-	Conf  zrpc.RpcServerConf
-	Redis redis.RedisConf
+	zrpc.RpcServerConf
+	RedisCli redis.RedisConf
 }

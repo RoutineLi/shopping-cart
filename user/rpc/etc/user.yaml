@@ -1,6 +1,20 @@
 Name: user.rpc
-ListenOn: 0.0.0.0:8080
+ListenOn: 0.0.0.0:8060
 Etcd:
   Hosts:
-    - 192.168.0.101:12379
+    - etcd:2379
   Key: user.rpc
+
+RedisCli:
+  Host: redis:6379
+
+Prometheus:
+  Host: 0.0.0.0
+  Port: 9060
+  Path: /metrics
+
+Telemetry:
+  Name: user.rpc
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger

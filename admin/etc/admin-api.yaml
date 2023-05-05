@@ -1,15 +1,11 @@
 Name: admin-api
 Host: 0.0.0.0
-Port: 14010
+Port: 8010
 UserRpc:
   Etcd:
     Hosts:
-      - 192.168.0.101:12379
+      - etcd:2379
     Key: user.rpc
-<<<<<<< Updated upstream
-Redis:
-  Host: 192.168.0.101:6380
-=======
 ProductRpc:
   Etcd:
     Hosts:
@@ -20,4 +16,12 @@ DeviceRpc:
     Hosts:
       - etcd:2379
     Key: device.rpc
->>>>>>> Stashed changes
+Prometheus:
+  Host: 0.0.0.0
+  Port: 9010
+  Path: /metrics
+Telemetry:
+  Name: admin.api
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger

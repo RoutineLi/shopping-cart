@@ -18,6 +18,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
 		Config:      c,
 		DB:          models.DB,
-		RedisClient: redis.MustNewRedis(c.Redis),
+		RedisClient: redis.MustNewRedis(c.RedisCli),
 	}
 }

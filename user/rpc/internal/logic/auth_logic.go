@@ -6,7 +6,7 @@ import (
 	"graduate_design/pkg"
 
 	"graduate_design/user/rpc/internal/svc"
-	"graduate_design/user/types/user"
+	"graduate_design/user/rpc/types/user"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

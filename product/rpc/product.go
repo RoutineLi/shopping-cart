@@ -25,15 +25,15 @@ func main() {
 	conf.MustLoad(*configFile, &c)
 	ctx := svc.NewServiceContext(c)
 
-	s := zrpc.MustNewServer(c.Conf, func(grpcServer *grpc.Server) {
+	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
 		product.RegisterProductServer(grpcServer, server.NewProductServer(ctx))
 
-		if c.Conf.Mode == service.DevMode || c.Conf.Mode == service.TestMode {
+		if c.Mode == service.DevMode || c.Mode == service.TestMode {
 			reflection.Register(grpcServer)
 		}
 	})
 	defer s.Stop()
 
-	fmt.Printf("Starting rpc server at %s...\n", c.Conf.ListenOn)
+	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
 	s.Start()
 }

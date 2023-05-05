@@ -2,45 +2,64 @@
 package types
 
 type UserLoginRequest struct {
-	Nickname string `json:"nickname"`
+	Nickname string `json:"username"`
 	Password string `json:"password"`
 }
 
 type UserLoginResponse struct {
-	Status  string              `json:"status"`
-	Code    uint                `json:"code"`
-	Message string              `json:"message"`
-	Data    UserData    `json:"data"`
+	Status  string   `json:"status"`
+	Code    uint     `json:"code"`
+	Message string   `json:"message"`
+	Data    UserData `json:"data"`
 }
 
 type UserData struct {
-	Id 		 uint   `json:"id"`
+	Id       uint   `json:"id,optional"`
 	Avatar   string `json:"avatar"`
-	Nickname string `json:"nickname"`
+	Nickname string `json:"username"`
 	Motto    string `json:"motto"`
 	Gender   string `json:"gender"`
 	Age      uint   `json:"age"`
-	Phone    string `json:"phone"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
-	Token    string `json:"token"`
+	Phone    string `json:"phone,optional"`
+	Email    string `json:"email,optional"`
+	Password string `json:"password, optional"`
+	Token    string `json:"token, optional"`
 }
 
-//管理员注册，需要添加is_admin字段，值为1
 type UserRegisterRequest struct {
 	Avatar   string `json:"avatar"`
-	Nickname string `json:"nickname"`
+	Nickname string `json:"username"`
 	Motto    string `json:"motto"`
 	Gender   string `json:"gender"`
 	Age      uint   `json:"age"`
 	Phone    string `json:"phone"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
-	IsAdmin  uint   `json:"is_admin, optional"`
+	IsAdmin  uint   `json:"is_admin,optional"`
 }
 
 type UserRegisterResponse struct {
 	Status  string `json:"status"`
 	Code    uint   `json:"code"`
 	Message string `json:"message"`
+}
+
+type GetAllUserRequest struct {
+}
+
+type GetAllUserResponse struct {
+	UserRegisterResponse
+	Data []*UserBasic `json:"data"`
+}
+
+type UserBasic struct {
+	Id       uint   `json:"id,optional"`
+	Avatar   string `json:"avatar"`
+	Nickname string `json:"username"`
+	Motto    string `json:"motto"`
+	Gender   string `json:"gender"`
+	Age      uint   `json:"age"`
+	Phone    string `json:"phone,optional"`
+	Email    string `json:"email,optional"`
+	Password string `json:"password, optional"`
 }

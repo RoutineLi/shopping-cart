@@ -1,13 +1,22 @@
 Name: open-api
 Host: 0.0.0.0
-Port: 16010
+Port: 8030
 DeviceRPC:
   Etcd:
     Hosts:
-      - 192.168.0.101:12379
+      - etcd:2379
     Key: device.rpc
 UserRPC:
   Etcd:
     Hosts:
-      - 192.168.0.101:12379
+      - etcd:2379
     Key: user.rpc
+Prometheus:
+  Host: 0.0.0.0
+  Port: 9030
+  Path: /metrics
+Telemetry:
+  Name: open.api
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger

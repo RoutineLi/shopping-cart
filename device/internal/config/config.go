@@ -13,5 +13,5 @@ type Config struct {
 		ClientID string
 		Password string
 	}
-	Redis redis.RedisConf
+	RedisCli redis.RedisConf
 }

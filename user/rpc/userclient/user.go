@@ -6,13 +6,19 @@ package userclient
 import (
 	"context"
 
-	"graduate_design/user/types/user"
+	"graduate_design/user/rpc/types/user"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
 )
 
 type (
+	DetailRequest    = user.DetailRequest
+	DetailResponse   = user.DetailResponse
+	IdsRequest       = user.IdsRequest
+	IdsResponse      = user.IdsResponse
+	ModRequest       = user.ModRequest
+	ModResponse      = user.ModResponse
 	OpenAuthRequest  = user.OpenAuthRequest
 	OpenAuthResponse = user.OpenAuthResponse
 	UserAuthRequest  = user.UserAuthRequest
@@ -21,6 +27,9 @@ type (
 	User interface {
 		Auth(ctx context.Context, in *UserAuthRequest, opts ...grpc.CallOption) (*UserAuthResponse, error)
 		OpenAuth(ctx context.Context, in *OpenAuthRequest, opts ...grpc.CallOption) (*OpenAuthResponse, error)
+		Ids(ctx context.Context, in *IdsRequest, opts ...grpc.CallOption) (*IdsResponse, error)
+		Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error)
+		Mod(ctx context.Context, in *ModRequest, opts ...grpc.CallOption) (*ModResponse, error)
 	}
 
 	defaultUser struct {
@@ -42,4 +51,19 @@ func (m *defaultUser) Auth(ctx context.Context, in *UserAuthRequest, opts ...grp
 func (m *defaultUser) OpenAuth(ctx context.Context, in *OpenAuthRequest, opts ...grpc.CallOption) (*OpenAuthResponse, error) {
 	client := user.NewUserClient(m.cli.Conn())
 	return client.OpenAuth(ctx, in, opts...)
+}
+
+func (m *defaultUser) Ids(ctx context.Context, in *IdsRequest, opts ...grpc.CallOption) (*IdsResponse, error) {
+	client := user.NewUserClient(m.cli.Conn())
+	return client.Ids(ctx, in, opts...)
+}
+
+func (m *defaultUser) Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error) {
+	client := user.NewUserClient(m.cli.Conn())
+	return client.Detail(ctx, in, opts...)
+}
+
+func (m *defaultUser) Mod(ctx context.Context, in *ModRequest, opts ...grpc.CallOption) (*ModResponse, error) {
+	client := user.NewUserClient(m.cli.Conn())
+	return client.Mod(ctx, in, opts...)
 }
