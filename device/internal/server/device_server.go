@@ -26,3 +26,28 @@ func (s *DeviceServer) SendMessage(ctx context.Context, in *device.SendMessageRe
 	l := logic.NewSendMessageLogic(ctx, s.svcCtx)
 	return l.SendMessage(in)
 }
+
+func (s *DeviceServer) Add(ctx context.Context, in *device.AddRequest) (*device.AddResponse, error) {
+	l := logic.NewAddLogic(ctx, s.svcCtx)
+	return l.Add(in)
+}
+
+func (s *DeviceServer) Del(ctx context.Context, in *device.DelRequest) (*device.DelResponse, error) {
+	l := logic.NewDelLogic(ctx, s.svcCtx)
+	return l.Del(in)
+}
+
+func (s *DeviceServer) Mod(ctx context.Context, in *device.ModRequest) (*device.ModResponse, error) {
+	l := logic.NewModLogic(ctx, s.svcCtx)
+	return l.Mod(in)
+}
+
+func (s *DeviceServer) Detail(ctx context.Context, in *device.DetailRequest) (*device.DetailResponse, error) {
+	l := logic.NewDetailLogic(ctx, s.svcCtx)
+	return l.Detail(in)
+}
+
+func (s *DeviceServer) Ids(ctx context.Context, in *device.IdsRequest) (*device.IdsResponse, error) {
+	l := logic.NewIdsLogic(ctx, s.svcCtx)
+	return l.Ids(in)
+}

@@ -13,11 +13,26 @@ import (
 )
 
 type (
+	AddRequest          = device.AddRequest
+	AddResponse         = device.AddResponse
+	DelRequest          = device.DelRequest
+	DelResponse         = device.DelResponse
+	DetailRequest       = device.DetailRequest
+	DetailResponse      = device.DetailResponse
+	IdsRequest          = device.IdsRequest
+	IdsResponse         = device.IdsResponse
+	ModRequest          = device.ModRequest
+	ModResponse         = device.ModResponse
 	SendMessageRequest  = device.SendMessageRequest
 	SendMessageResponse = device.SendMessageResponse
 
 	Device interface {
 		SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error)
+		Add(ctx context.Context, in *AddRequest, opts ...grpc.CallOption) (*AddResponse, error)
+		Del(ctx context.Context, in *DelRequest, opts ...grpc.CallOption) (*DelResponse, error)
+		Mod(ctx context.Context, in *ModRequest, opts ...grpc.CallOption) (*ModResponse, error)
+		Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error)
+		Ids(ctx context.Context, in *IdsRequest, opts ...grpc.CallOption) (*IdsResponse, error)
 	}
 
 	defaultDevice struct {
@@ -34,4 +49,29 @@ func NewDevice(cli zrpc.Client) Device {
 func (m *defaultDevice) SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error) {
 	client := device.NewDeviceClient(m.cli.Conn())
 	return client.SendMessage(ctx, in, opts...)
+}
+
+func (m *defaultDevice) Add(ctx context.Context, in *AddRequest, opts ...grpc.CallOption) (*AddResponse, error) {
+	client := device.NewDeviceClient(m.cli.Conn())
+	return client.Add(ctx, in, opts...)
+}
+
+func (m *defaultDevice) Del(ctx context.Context, in *DelRequest, opts ...grpc.CallOption) (*DelResponse, error) {
+	client := device.NewDeviceClient(m.cli.Conn())
+	return client.Del(ctx, in, opts...)
+}
+
+func (m *defaultDevice) Mod(ctx context.Context, in *ModRequest, opts ...grpc.CallOption) (*ModResponse, error) {
+	client := device.NewDeviceClient(m.cli.Conn())
+	return client.Mod(ctx, in, opts...)
+}
+
+func (m *defaultDevice) Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error) {
+	client := device.NewDeviceClient(m.cli.Conn())
+	return client.Detail(ctx, in, opts...)
+}
+
+func (m *defaultDevice) Ids(ctx context.Context, in *IdsRequest, opts ...grpc.CallOption) (*IdsResponse, error) {
+	client := device.NewDeviceClient(m.cli.Conn())
+	return client.Ids(ctx, in, opts...)
 }

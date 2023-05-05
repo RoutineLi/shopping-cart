@@ -6,12 +6,6 @@ import (
 )
 
 type Config struct {
-	zrpc.RpcServerConf
-	DeviceRPC zrpc.RpcClientConf
-	Mqtt      struct {
-		Broker   string
-		ClientID string
-		Password string
-	}
+	Conf  zrpc.RpcServerConf
 	Redis redis.RedisConf
 }

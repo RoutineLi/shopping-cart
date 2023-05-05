@@ -2,8 +2,7 @@ package logic
 
 import (
 	"context"
-	"graduate_design/models"
-	"graduate_design/pkg"
+	"graduate_design/product/rpc/types/product"
 
 	"graduate_design/admin/internal/svc"
 	"graduate_design/admin/internal/types"
@@ -27,16 +26,39 @@ func NewProductListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Produ
 
 func (l *ProductListLogic) ProductList(req *types.ProductListRequest) (resp *types.ProductListResponse, err error) {
 	list := make([]*types.Product, 0)
-	req.Size = pkg.If(req.Size == 0, 20, req.Size).(uint)
-	req.Page = pkg.If(req.Page == 0, 0, (req.Page-1)*req.Size).(uint)
 	resp = new(types.ProductListResponse)
-	var count int64
-	err = models.GetProductList(req.Name).Count(&count).Offset(int(req.Page)).Limit(int(req.Size)).Find(&list).Error
-	if err != nil {
-		logx.Error("[DB ERROR]: ", err)
-		return
+	count := 0
+	rpcRsp, _ := l.svcCtx.RpcProduct.Ids(context.Background(), &product.IdsRequest{})
+	if len(rpcRsp.Ids) == 0 {
+		return resp, nil
 	}
-	resp.Count = count
+
+	for i := int((req.Page - 1) * req.Size); i < len(rpcRsp.Ids); i++ {
+		if count == int(req.Size) {
+			break
+		}
+		in := &product.DetailRequest{Id: rpcRsp.Ids[i]}
+		out, _ := l.svcCtx.RpcProduct.Detail(context.Background(), in)
+		item := &types.Product{
+			Name:          out.Data.Name,
+			Img:           out.Data.Img,
+			Price:         out.Data.Price,
+			Origin:        out.Data.Origin,
+			Brand:         out.Data.Brand,
+			Specification: out.Data.Specification,
+			ShelfLife:     out.Data.ShelfLife,
+			Description:   out.Data.Description,
+			Count:         int(out.Data.Count),
+			Type:          out.Data.Type,
+			Latitude:      out.Data.Latitude,
+			Longitude:     out.Data.Longitude,
+			Location:      out.Data.Location,
+		}
+		list = append(list, item)
+		count++
+	}
+
+	resp.Count = int64(len(list))
 	resp.List = list
 	return resp, nil
 }

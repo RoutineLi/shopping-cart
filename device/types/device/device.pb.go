@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.30.0
 // 	protoc        v4.22.0
-// source: device.proto
+// source: device/device.proto
 
 package device
 
@@ -32,7 +32,7 @@ type SendMessageRequest struct {
 func (x *SendMessageRequest) Reset() {
 	*x = SendMessageRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_device_proto_msgTypes[0]
+		mi := &file_device_device_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -45,7 +45,7 @@ func (x *SendMessageRequest) String() string {
 func (*SendMessageRequest) ProtoMessage() {}
 
 func (x *SendMessageRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_device_proto_msgTypes[0]
+	mi := &file_device_device_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58,7 +58,7 @@ func (x *SendMessageRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SendMessageRequest.ProtoReflect.Descriptor instead.
 func (*SendMessageRequest) Descriptor() ([]byte, []int) {
-	return file_device_proto_rawDescGZIP(), []int{0}
+	return file_device_device_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *SendMessageRequest) GetDeviceKey() string {
@@ -86,7 +86,7 @@ type SendMessageResponse struct {
 func (x *SendMessageResponse) Reset() {
 	*x = SendMessageResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_device_proto_msgTypes[1]
+		mi := &file_device_device_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -99,7 +99,7 @@ func (x *SendMessageResponse) String() string {
 func (*SendMessageResponse) ProtoMessage() {}
 
 func (x *SendMessageResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_device_proto_msgTypes[1]
+	mi := &file_device_device_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -112,7 +112,7 @@ func (x *SendMessageResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SendMessageResponse.ProtoReflect.Descriptor instead.
 func (*SendMessageResponse) Descriptor() ([]byte, []int) {
-	return file_device_proto_rawDescGZIP(), []int{1}
+	return file_device_device_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *SendMessageResponse) GetMsg() string {
@@ -122,60 +122,654 @@ func (x *SendMessageResponse) GetMsg() string {
 	return ""
 }
 
-var File_device_proto protoreflect.FileDescriptor
+type AddRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
 
-var file_device_proto_rawDesc = []byte{
-	0x0a, 0x0c, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x06,
-	0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x22, 0x44, 0x0a, 0x12, 0x53, 0x65, 0x6e, 0x64, 0x4d, 0x65,
-	0x73, 0x73, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09,
-	0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x4b, 0x65, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x09, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x4b, 0x65, 0x79, 0x12, 0x10, 0x0a, 0x03, 0x4d, 0x73,
-	0x67, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x4d, 0x73, 0x67, 0x22, 0x27, 0x0a, 0x13,
-	0x53, 0x65, 0x6e, 0x64, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x4d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x03, 0x4d, 0x73, 0x67, 0x32, 0x50, 0x0a, 0x06, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x12,
+	Name   string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Userid uint32 `protobuf:"varint,2,opt,name=userid,proto3" json:"userid,omitempty"`
+}
+
+func (x *AddRequest) Reset() {
+	*x = AddRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_device_device_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AddRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddRequest) ProtoMessage() {}
+
+func (x *AddRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_device_device_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddRequest.ProtoReflect.Descriptor instead.
+func (*AddRequest) Descriptor() ([]byte, []int) {
+	return file_device_device_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *AddRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *AddRequest) GetUserid() uint32 {
+	if x != nil {
+		return x.Userid
+	}
+	return 0
+}
+
+type AddResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Status bool `protobuf:"varint,1,opt,name=Status,proto3" json:"Status,omitempty"`
+}
+
+func (x *AddResponse) Reset() {
+	*x = AddResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_device_device_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AddResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddResponse) ProtoMessage() {}
+
+func (x *AddResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_device_device_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddResponse.ProtoReflect.Descriptor instead.
+func (*AddResponse) Descriptor() ([]byte, []int) {
+	return file_device_device_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *AddResponse) GetStatus() bool {
+	if x != nil {
+		return x.Status
+	}
+	return false
+}
+
+type DelRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id uint32 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *DelRequest) Reset() {
+	*x = DelRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_device_device_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DelRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DelRequest) ProtoMessage() {}
+
+func (x *DelRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_device_device_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DelRequest.ProtoReflect.Descriptor instead.
+func (*DelRequest) Descriptor() ([]byte, []int) {
+	return file_device_device_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *DelRequest) GetId() uint32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+type DelResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Status bool `protobuf:"varint,1,opt,name=Status,proto3" json:"Status,omitempty"`
+}
+
+func (x *DelResponse) Reset() {
+	*x = DelResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_device_device_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DelResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DelResponse) ProtoMessage() {}
+
+func (x *DelResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_device_device_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DelResponse.ProtoReflect.Descriptor instead.
+func (*DelResponse) Descriptor() ([]byte, []int) {
+	return file_device_device_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *DelResponse) GetStatus() bool {
+	if x != nil {
+		return x.Status
+	}
+	return false
+}
+
+type ModRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id     uint32 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Userid string `protobuf:"bytes,2,opt,name=userid,proto3" json:"userid,omitempty"`
+	Name   string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+}
+
+func (x *ModRequest) Reset() {
+	*x = ModRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_device_device_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ModRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ModRequest) ProtoMessage() {}
+
+func (x *ModRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_device_device_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ModRequest.ProtoReflect.Descriptor instead.
+func (*ModRequest) Descriptor() ([]byte, []int) {
+	return file_device_device_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ModRequest) GetId() uint32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *ModRequest) GetUserid() string {
+	if x != nil {
+		return x.Userid
+	}
+	return ""
+}
+
+func (x *ModRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+type ModResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Status bool `protobuf:"varint,1,opt,name=Status,proto3" json:"Status,omitempty"`
+}
+
+func (x *ModResponse) Reset() {
+	*x = ModResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_device_device_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ModResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ModResponse) ProtoMessage() {}
+
+func (x *ModResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_device_device_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ModResponse.ProtoReflect.Descriptor instead.
+func (*ModResponse) Descriptor() ([]byte, []int) {
+	return file_device_device_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ModResponse) GetStatus() bool {
+	if x != nil {
+		return x.Status
+	}
+	return false
+}
+
+type DetailRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id uint32 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *DetailRequest) Reset() {
+	*x = DetailRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_device_device_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DetailRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DetailRequest) ProtoMessage() {}
+
+func (x *DetailRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_device_device_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DetailRequest.ProtoReflect.Descriptor instead.
+func (*DetailRequest) Descriptor() ([]byte, []int) {
+	return file_device_device_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *DetailRequest) GetId() uint32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+type DetailResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id             uint32 `protobuf:"varint,5,opt,name=id,proto3" json:"id,omitempty"`
+	Name           string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Userid         string `protobuf:"bytes,2,opt,name=userid,proto3" json:"userid,omitempty"`
+	Key            string `protobuf:"bytes,3,opt,name=key,proto3" json:"key,omitempty"`
+	Secret         string `protobuf:"bytes,6,opt,name=secret,proto3" json:"secret,omitempty"`
+	Lastonlinetime int64  `protobuf:"varint,4,opt,name=lastonlinetime,proto3" json:"lastonlinetime,omitempty"`
+}
+
+func (x *DetailResponse) Reset() {
+	*x = DetailResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_device_device_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DetailResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DetailResponse) ProtoMessage() {}
+
+func (x *DetailResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_device_device_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DetailResponse.ProtoReflect.Descriptor instead.
+func (*DetailResponse) Descriptor() ([]byte, []int) {
+	return file_device_device_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *DetailResponse) GetId() uint32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *DetailResponse) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *DetailResponse) GetUserid() string {
+	if x != nil {
+		return x.Userid
+	}
+	return ""
+}
+
+func (x *DetailResponse) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *DetailResponse) GetSecret() string {
+	if x != nil {
+		return x.Secret
+	}
+	return ""
+}
+
+func (x *DetailResponse) GetLastonlinetime() int64 {
+	if x != nil {
+		return x.Lastonlinetime
+	}
+	return 0
+}
+
+type IdsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *IdsRequest) Reset() {
+	*x = IdsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_device_device_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *IdsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IdsRequest) ProtoMessage() {}
+
+func (x *IdsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_device_device_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IdsRequest.ProtoReflect.Descriptor instead.
+func (*IdsRequest) Descriptor() ([]byte, []int) {
+	return file_device_device_proto_rawDescGZIP(), []int{10}
+}
+
+type IdsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Ids []uint32 `protobuf:"varint,1,rep,packed,name=ids,proto3" json:"ids,omitempty"`
+}
+
+func (x *IdsResponse) Reset() {
+	*x = IdsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_device_device_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *IdsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IdsResponse) ProtoMessage() {}
+
+func (x *IdsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_device_device_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IdsResponse.ProtoReflect.Descriptor instead.
+func (*IdsResponse) Descriptor() ([]byte, []int) {
+	return file_device_device_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *IdsResponse) GetIds() []uint32 {
+	if x != nil {
+		return x.Ids
+	}
+	return nil
+}
+
+var File_device_device_proto protoreflect.FileDescriptor
+
+var file_device_device_proto_rawDesc = []byte{
+	0x0a, 0x13, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x2f, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x2e,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x06, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x22, 0x44, 0x0a,
+	0x12, 0x53, 0x65, 0x6e, 0x64, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x4b, 0x65, 0x79,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x4b, 0x65,
+	0x79, 0x12, 0x10, 0x0a, 0x03, 0x4d, 0x73, 0x67, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03,
+	0x4d, 0x73, 0x67, 0x22, 0x27, 0x0a, 0x13, 0x53, 0x65, 0x6e, 0x64, 0x4d, 0x65, 0x73, 0x73, 0x61,
+	0x67, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x4d, 0x73,
+	0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x4d, 0x73, 0x67, 0x22, 0x38, 0x0a, 0x0a,
+	0x41, 0x64, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61,
+	0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x16,
+	0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x06,
+	0x75, 0x73, 0x65, 0x72, 0x69, 0x64, 0x22, 0x25, 0x0a, 0x0b, 0x41, 0x64, 0x64, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x1c, 0x0a,
+	0x0a, 0x44, 0x65, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x02, 0x69, 0x64, 0x22, 0x25, 0x0a, 0x0b, 0x44,
+	0x65, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x53, 0x74,
+	0x61, 0x74, 0x75, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x53, 0x74, 0x61, 0x74,
+	0x75, 0x73, 0x22, 0x48, 0x0a, 0x0a, 0x4d, 0x6f, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x02, 0x69, 0x64,
+	0x12, 0x16, 0x0a, 0x06, 0x75, 0x73, 0x65, 0x72, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x25, 0x0a, 0x0b,
+	0x4d, 0x6f, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x53,
+	0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x53, 0x74, 0x61,
+	0x74, 0x75, 0x73, 0x22, 0x1f, 0x0a, 0x0d, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0d,
+	0x52, 0x02, 0x69, 0x64, 0x22, 0x9e, 0x01, 0x0a, 0x0e, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x05, 0x20,
+	0x01, 0x28, 0x0d, 0x52, 0x02, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x75,
+	0x73, 0x65, 0x72, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65,
+	0x72, 0x69, 0x64, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x65, 0x63, 0x72, 0x65, 0x74, 0x18,
+	0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x73, 0x65, 0x63, 0x72, 0x65, 0x74, 0x12, 0x26, 0x0a,
+	0x0e, 0x6c, 0x61, 0x73, 0x74, 0x6f, 0x6e, 0x6c, 0x69, 0x6e, 0x65, 0x74, 0x69, 0x6d, 0x65, 0x18,
+	0x04, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e, 0x6c, 0x61, 0x73, 0x74, 0x6f, 0x6e, 0x6c, 0x69, 0x6e,
+	0x65, 0x74, 0x69, 0x6d, 0x65, 0x22, 0x0c, 0x0a, 0x0a, 0x49, 0x64, 0x73, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x22, 0x1f, 0x0a, 0x0b, 0x49, 0x64, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x69, 0x64, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0d, 0x52,
+	0x03, 0x69, 0x64, 0x73, 0x32, 0xc9, 0x02, 0x0a, 0x06, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x12,
 	0x46, 0x0a, 0x0b, 0x53, 0x65, 0x6e, 0x64, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x12, 0x1a,
 	0x2e, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x53, 0x65, 0x6e, 0x64, 0x4d, 0x65, 0x73, 0x73,
 	0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1b, 0x2e, 0x64, 0x65, 0x76,
 	0x69, 0x63, 0x65, 0x2e, 0x53, 0x65, 0x6e, 0x64, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x0a, 0x5a, 0x08, 0x2e, 0x2f, 0x64, 0x65, 0x76,
-	0x69, 0x63, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2e, 0x0a, 0x03, 0x41, 0x64, 0x64, 0x12, 0x12,
+	0x2e, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x41, 0x64, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x13, 0x2e, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x41, 0x64, 0x64, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2e, 0x0a, 0x03, 0x44, 0x65, 0x6c, 0x12, 0x12,
+	0x2e, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x44, 0x65, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x13, 0x2e, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x44, 0x65, 0x6c, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2e, 0x0a, 0x03, 0x4d, 0x6f, 0x64, 0x12, 0x12,
+	0x2e, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x13, 0x2e, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x4d, 0x6f, 0x64, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x37, 0x0a, 0x06, 0x44, 0x65, 0x74, 0x61, 0x69,
+	0x6c, 0x12, 0x15, 0x2e, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x2e, 0x44, 0x65, 0x74, 0x61, 0x69,
+	0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x64, 0x65, 0x76, 0x69, 0x63,
+	0x65, 0x2e, 0x44, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x12, 0x2e, 0x0a, 0x03, 0x49, 0x64, 0x73, 0x12, 0x12, 0x2e, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65,
+	0x2e, 0x49, 0x64, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x13, 0x2e, 0x64, 0x65,
+	0x76, 0x69, 0x63, 0x65, 0x2e, 0x49, 0x64, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x42, 0x0a, 0x5a, 0x08, 0x2e, 0x2f, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x62, 0x06, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
-	file_device_proto_rawDescOnce sync.Once
-	file_device_proto_rawDescData = file_device_proto_rawDesc
+	file_device_device_proto_rawDescOnce sync.Once
+	file_device_device_proto_rawDescData = file_device_device_proto_rawDesc
 )
 
-func file_device_proto_rawDescGZIP() []byte {
-	file_device_proto_rawDescOnce.Do(func() {
-		file_device_proto_rawDescData = protoimpl.X.CompressGZIP(file_device_proto_rawDescData)
+func file_device_device_proto_rawDescGZIP() []byte {
+	file_device_device_proto_rawDescOnce.Do(func() {
+		file_device_device_proto_rawDescData = protoimpl.X.CompressGZIP(file_device_device_proto_rawDescData)
 	})
-	return file_device_proto_rawDescData
+	return file_device_device_proto_rawDescData
 }
 
-var file_device_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_device_proto_goTypes = []interface{}{
+var file_device_device_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_device_device_proto_goTypes = []interface{}{
 	(*SendMessageRequest)(nil),  // 0: device.SendMessageRequest
 	(*SendMessageResponse)(nil), // 1: device.SendMessageResponse
+	(*AddRequest)(nil),          // 2: device.AddRequest
+	(*AddResponse)(nil),         // 3: device.AddResponse
+	(*DelRequest)(nil),          // 4: device.DelRequest
+	(*DelResponse)(nil),         // 5: device.DelResponse
+	(*ModRequest)(nil),          // 6: device.ModRequest
+	(*ModResponse)(nil),         // 7: device.ModResponse
+	(*DetailRequest)(nil),       // 8: device.DetailRequest
+	(*DetailResponse)(nil),      // 9: device.DetailResponse
+	(*IdsRequest)(nil),          // 10: device.IdsRequest
+	(*IdsResponse)(nil),         // 11: device.IdsResponse
 }
-var file_device_proto_depIdxs = []int32{
-	0, // 0: device.Device.SendMessage:input_type -> device.SendMessageRequest
-	1, // 1: device.Device.SendMessage:output_type -> device.SendMessageResponse
-	1, // [1:2] is the sub-list for method output_type
-	0, // [0:1] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+var file_device_device_proto_depIdxs = []int32{
+	0,  // 0: device.Device.SendMessage:input_type -> device.SendMessageRequest
+	2,  // 1: device.Device.Add:input_type -> device.AddRequest
+	4,  // 2: device.Device.Del:input_type -> device.DelRequest
+	6,  // 3: device.Device.Mod:input_type -> device.ModRequest
+	8,  // 4: device.Device.Detail:input_type -> device.DetailRequest
+	10, // 5: device.Device.Ids:input_type -> device.IdsRequest
+	1,  // 6: device.Device.SendMessage:output_type -> device.SendMessageResponse
+	3,  // 7: device.Device.Add:output_type -> device.AddResponse
+	5,  // 8: device.Device.Del:output_type -> device.DelResponse
+	7,  // 9: device.Device.Mod:output_type -> device.ModResponse
+	9,  // 10: device.Device.Detail:output_type -> device.DetailResponse
+	11, // 11: device.Device.Ids:output_type -> device.IdsResponse
+	6,  // [6:12] is the sub-list for method output_type
+	0,  // [0:6] is the sub-list for method input_type
+	0,  // [0:0] is the sub-list for extension type_name
+	0,  // [0:0] is the sub-list for extension extendee
+	0,  // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_device_proto_init() }
-func file_device_proto_init() {
-	if File_device_proto != nil {
+func init() { file_device_device_proto_init() }
+func file_device_device_proto_init() {
+	if File_device_device_proto != nil {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_device_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_device_device_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SendMessageRequest); i {
 			case 0:
 				return &v.state
@@ -187,8 +781,128 @@ func file_device_proto_init() {
 				return nil
 			}
 		}
-		file_device_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_device_device_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SendMessageResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_device_device_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AddRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_device_device_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AddResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_device_device_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DelRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_device_device_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DelResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_device_device_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ModRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_device_device_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ModResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_device_device_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DetailRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_device_device_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DetailResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_device_device_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*IdsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_device_device_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*IdsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -204,18 +918,18 @@ func file_device_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_device_proto_rawDesc,
+			RawDescriptor: file_device_device_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_device_proto_goTypes,
-		DependencyIndexes: file_device_proto_depIdxs,
-		MessageInfos:      file_device_proto_msgTypes,
+		GoTypes:           file_device_device_proto_goTypes,
+		DependencyIndexes: file_device_device_proto_depIdxs,
+		MessageInfos:      file_device_device_proto_msgTypes,
 	}.Build()
-	File_device_proto = out.File
-	file_device_proto_rawDesc = nil
-	file_device_proto_goTypes = nil
-	file_device_proto_depIdxs = nil
+	File_device_device_proto = out.File
+	file_device_device_proto_rawDesc = nil
+	file_device_device_proto_goTypes = nil
+	file_device_device_proto_depIdxs = nil
 }

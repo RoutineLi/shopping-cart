@@ -5,6 +5,11 @@ option go_package="./device";
 
 service Device{
   rpc SendMessage(SendMessageRequest) returns(SendMessageResponse);
+  rpc Add(AddRequest) returns (AddResponse);
+  rpc Del(DelRequest) returns (DelResponse);
+  rpc Mod(ModRequest) returns (ModResponse);
+  rpc Detail(DetailRequest) returns (DetailResponse);
+  rpc Ids(IdsRequest) returns (IdsResponse);
 }
 
 message SendMessageRequest{
@@ -14,4 +19,51 @@ message SendMessageRequest{
 
 message SendMessageResponse{
   string Msg = 2;
+}
+
+message AddRequest{
+  string name = 1;
+  uint32 userid = 2;
+}
+
+message AddResponse{
+  bool Status = 1;
+}
+
+message DelRequest{
+  uint32 id = 1;
+}
+
+message DelResponse{
+  bool Status = 1;
+}
+
+message ModRequest{
+  uint32 id = 1;
+  string userid = 2;
+  string name = 3;
+}
+
+message ModResponse{
+  bool Status = 1;
+}
+
+message DetailRequest{
+  uint32 id = 1;
+}
+
+message DetailResponse{
+  uint32 id = 5;
+  string name = 1;
+  string userid = 2;
+  string key = 3;
+  string secret = 6;
+  int64 lastonlinetime = 4;
+}
+
+message IdsRequest{
+}
+
+message IdsResponse{
+  repeated uint32 ids = 1;
 }

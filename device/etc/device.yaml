@@ -16,3 +16,5 @@ Mqtt:
     admin-server
   Password:
     'lpj2252488'
+Redis:
+  Host: redis:2379

@@ -1,0 +1,9 @@
+Conf:
+  Name: product.rpc
+  ListenOn: 0.0.0.0:8041
+  Etcd:
+    Hosts:
+      - etcd:2379
+    Key: product.rpc
+Redis:
+  Host: redis:6379

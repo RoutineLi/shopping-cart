@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v4.22.0
-// source: device.proto
+// source: device/device.proto
 
 package device
 
@@ -20,6 +20,11 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	Device_SendMessage_FullMethodName = "/device.Device/SendMessage"
+	Device_Add_FullMethodName         = "/device.Device/Add"
+	Device_Del_FullMethodName         = "/device.Device/Del"
+	Device_Mod_FullMethodName         = "/device.Device/Mod"
+	Device_Detail_FullMethodName      = "/device.Device/Detail"
+	Device_Ids_FullMethodName         = "/device.Device/Ids"
 )
 
 // DeviceClient is the client API for Device service.
@@ -27,6 +32,11 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DeviceClient interface {
 	SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error)
+	Add(ctx context.Context, in *AddRequest, opts ...grpc.CallOption) (*AddResponse, error)
+	Del(ctx context.Context, in *DelRequest, opts ...grpc.CallOption) (*DelResponse, error)
+	Mod(ctx context.Context, in *ModRequest, opts ...grpc.CallOption) (*ModResponse, error)
+	Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error)
+	Ids(ctx context.Context, in *IdsRequest, opts ...grpc.CallOption) (*IdsResponse, error)
 }
 
 type deviceClient struct {
@@ -46,11 +56,61 @@ func (c *deviceClient) SendMessage(ctx context.Context, in *SendMessageRequest, 
 	return out, nil
 }
 
+func (c *deviceClient) Add(ctx context.Context, in *AddRequest, opts ...grpc.CallOption) (*AddResponse, error) {
+	out := new(AddResponse)
+	err := c.cc.Invoke(ctx, Device_Add_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deviceClient) Del(ctx context.Context, in *DelRequest, opts ...grpc.CallOption) (*DelResponse, error) {
+	out := new(DelResponse)
+	err := c.cc.Invoke(ctx, Device_Del_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deviceClient) Mod(ctx context.Context, in *ModRequest, opts ...grpc.CallOption) (*ModResponse, error) {
+	out := new(ModResponse)
+	err := c.cc.Invoke(ctx, Device_Mod_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deviceClient) Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error) {
+	out := new(DetailResponse)
+	err := c.cc.Invoke(ctx, Device_Detail_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *deviceClient) Ids(ctx context.Context, in *IdsRequest, opts ...grpc.CallOption) (*IdsResponse, error) {
+	out := new(IdsResponse)
+	err := c.cc.Invoke(ctx, Device_Ids_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DeviceServer is the server API for Device service.
 // All implementations must embed UnimplementedDeviceServer
 // for forward compatibility
 type DeviceServer interface {
 	SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error)
+	Add(context.Context, *AddRequest) (*AddResponse, error)
+	Del(context.Context, *DelRequest) (*DelResponse, error)
+	Mod(context.Context, *ModRequest) (*ModResponse, error)
+	Detail(context.Context, *DetailRequest) (*DetailResponse, error)
+	Ids(context.Context, *IdsRequest) (*IdsResponse, error)
 	mustEmbedUnimplementedDeviceServer()
 }
 
@@ -60,6 +120,21 @@ type UnimplementedDeviceServer struct {
 
 func (UnimplementedDeviceServer) SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendMessage not implemented")
+}
+func (UnimplementedDeviceServer) Add(context.Context, *AddRequest) (*AddResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Add not implemented")
+}
+func (UnimplementedDeviceServer) Del(context.Context, *DelRequest) (*DelResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Del not implemented")
+}
+func (UnimplementedDeviceServer) Mod(context.Context, *ModRequest) (*ModResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Mod not implemented")
+}
+func (UnimplementedDeviceServer) Detail(context.Context, *DetailRequest) (*DetailResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Detail not implemented")
+}
+func (UnimplementedDeviceServer) Ids(context.Context, *IdsRequest) (*IdsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Ids not implemented")
 }
 func (UnimplementedDeviceServer) mustEmbedUnimplementedDeviceServer() {}
 
@@ -92,6 +167,96 @@ func _Device_SendMessage_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Device_Add_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeviceServer).Add(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Device_Add_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeviceServer).Add(ctx, req.(*AddRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Device_Del_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeviceServer).Del(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Device_Del_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeviceServer).Del(ctx, req.(*DelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Device_Mod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ModRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeviceServer).Mod(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Device_Mod_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeviceServer).Mod(ctx, req.(*ModRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Device_Detail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DetailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeviceServer).Detail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Device_Detail_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeviceServer).Detail(ctx, req.(*DetailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Device_Ids_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IdsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DeviceServer).Ids(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Device_Ids_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DeviceServer).Ids(ctx, req.(*IdsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Device_ServiceDesc is the grpc.ServiceDesc for Device service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -103,7 +268,27 @@ var Device_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "SendMessage",
 			Handler:    _Device_SendMessage_Handler,
 		},
+		{
+			MethodName: "Add",
+			Handler:    _Device_Add_Handler,
+		},
+		{
+			MethodName: "Del",
+			Handler:    _Device_Del_Handler,
+		},
+		{
+			MethodName: "Mod",
+			Handler:    _Device_Mod_Handler,
+		},
+		{
+			MethodName: "Detail",
+			Handler:    _Device_Detail_Handler,
+		},
+		{
+			MethodName: "Ids",
+			Handler:    _Device_Ids_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "device.proto",
+	Metadata: "device/device.proto",
 }

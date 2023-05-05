@@ -51,7 +51,7 @@ type DeviceAddResponse struct {
 }
 
 type DeviceModifyRequest struct {
-	Id string `json:"id"`
+	Id uint `json:"id"`
 	DeviceAddRequest
 }
 

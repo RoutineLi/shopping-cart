@@ -2,13 +2,10 @@ package logic
 
 import (
 	"context"
-	"graduate_design/models"
-	"graduate_design/pkg"
-
+	"github.com/zeromicro/go-zero/core/logx"
 	"graduate_design/admin/internal/svc"
 	"graduate_design/admin/internal/types"
-
-	"github.com/zeromicro/go-zero/core/logx"
+	"graduate_design/device/types/device"
 )
 
 type DeviceListLogic struct {
@@ -26,17 +23,30 @@ func NewDeviceListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Device
 }
 
 func (l *DeviceListLogic) DeviceList(req *types.DeviceListRequest) (resp *types.DeviceListResponse, err error) {
-	req.Size = pkg.If(req.Size == 0, 20, req.Size).(uint)
-	req.Page = pkg.If(req.Page == 0, 0, (req.Page-1)*req.Size).(uint)
-	var cnt int64
+	list := make([]*types.Device, 0)
 	resp = new(types.DeviceListResponse)
-	data := make([]*types.Device, 0)
-	err = models.GetDeviceList(req.Name).Count(&cnt).Limit(int(req.Size)).Offset(int(req.Page)).Find(&data).Error
-	if err != nil {
-		logx.Error("[DB ERROR]: ", err)
-		return
+	count := 0
+	rpcRsp, _ := l.svcCtx.RpcDevice.Ids(context.Background(), &device.IdsRequest{})
+	if len(rpcRsp.Ids) == 0 {
+		return resp, nil
 	}
-	resp.Count = cnt
-	resp.List = data
+	for i := int((req.Page - 1) * req.Size); i < len(rpcRsp.Ids); i++ {
+		if count == int(req.Size) {
+			break
+		}
+		in := &device.DetailRequest{Id: rpcRsp.Ids[i]}
+		out, _ := l.svcCtx.RpcDevice.Detail(context.Background(), in)
+		item := &types.Device{
+			Name:           out.Name,
+			UserId:         out.Userid,
+			Key:            out.Key,
+			Secret:         out.Secret,
+			LastOnlineTime: out.Lastonlinetime,
+		}
+		list = append(list, item)
+		count++
+	}
+	resp.Count = int64(len(list))
+	resp.List = list
 	return resp, nil
 }

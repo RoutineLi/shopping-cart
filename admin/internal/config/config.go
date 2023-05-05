@@ -8,6 +8,8 @@ import (
 
 type Config struct {
 	rest.RestConf
-	UserRpc zrpc.RpcClientConf
-	Redis   redis.RedisConf
+	UserRpc    zrpc.RpcClientConf
+	ProductRpc zrpc.RpcClientConf
+	DeviceRpc  zrpc.RpcClientConf
+	Redis      redis.RedisConf
 }

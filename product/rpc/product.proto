@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+package product;
+option  go_package="./product";
+
+service Product{
+  rpc Add(AddRequest) returns (AddResponse);
+  rpc Del(DelRequest) returns (DelResponse);
+  rpc Mod(ModRequest) returns (ModResponse);
+  rpc Detail(DetailRequest) returns (DetailResponse);
+  rpc Categories(CategoriesRequest) returns (CategoriesResponse);
+  rpc Ids(IdsRequest) returns (IdsResponse);
+}
+
+message AddRequest{
+  // @inject_tag: json:"name"
+  string name = 1;
+  // @inject_tag: json:"img"
+  string img = 2;
+  // @inject_tag: json:"price"
+  double price = 3;
+  // @inject_tag: json:"origin"
+  string origin = 4;
+  // @inject_tag: json:"brand"
+  string brand = 12;
+  // @inject_tag: json:"specification"
+  string specification = 5;
+  // @inject_tag: json:"description"
+  string description = 13;
+  // @inject_tag: json:"shelflife"
+  string shelfLife = 6;
+  // @inject_tag: json:"count"
+  int32  count = 7;
+  // @inject_tag: json:"type"
+  string type = 8;
+  // @inject_tag: json:"latitude"
+  double latitude = 9;
+  // @inject_tag: json:"longitude"
+  double longitude = 10;
+  // @inject_tag: json:"location"
+  string location = 11;
+}
+
+message AddResponse{
+  bool Status = 1;
+}
+
+message DelRequest{
+  uint32 Id = 1;
+}
+
+message DelResponse{
+  bool Status = 1;
+}
+
+message ModRequest{
+  uint32 Id = 1;
+  AddRequest Data = 2;
+}
+
+message ModResponse{
+  bool Status = 1;
+}
+
+message DetailRequest{
+  uint32 Id = 1;
+}
+
+message DetailResponse{
+  Item Data = 1;
+}
+
+message CategoriesRequest{}
+
+message CategoriesResponse{
+  repeated string Categories = 1;
+}
+
+message IdsRequest{}
+
+message IdsResponse{
+  repeated uint32 Ids = 1;
+}
+
+message Item{
+  // @inject_tag: json:"name"
+  string name = 1;
+  // @inject_tag: json:"img"
+  string img = 2;
+  // @inject_tag: json:"price"
+  double price = 3;
+  // @inject_tag: json:"origin"
+  string origin = 4;
+  // @inject_tag: json:"specification"
+  string specification = 5;
+  // @inject_tag: json:"brand"
+  string brand = 13;
+  // @inject_tag: json:"description"
+  string description = 14;
+  // @inject_tag: json:"shelflife"
+  string shelfLife = 6;
+  // @inject_tag: json:"count"
+  int32 count = 7;
+  // @inject_tag: json:"type"
+  string type = 8;
+  // @inject_tag: json:"latitude"
+  double latitude = 9;
+  // @inject_tag: json:"longitude"
+  double longitude = 10;
+  // @inject_tag: json:"location"
+  string location = 11;
+  // @inject_tag: json:"id"
+  uint32 id = 12;
+}

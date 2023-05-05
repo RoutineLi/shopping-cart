@@ -2,8 +2,8 @@ package logic
 
 import (
 	"context"
-	"graduate_design/define"
-	"graduate_design/models"
+	"graduate_design/device/types/device"
+	"strconv"
 
 	"graduate_design/admin/internal/svc"
 	"graduate_design/admin/internal/types"
@@ -27,25 +27,18 @@ func NewDeviceModifyLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Devi
 
 func (l *DeviceModifyLogic) DeviceModify(req *types.DeviceModifyRequest) (resp *types.DeviceModifyResponse, err error) {
 	resp = new(types.DeviceModifyResponse)
-	device := new(models.Device)
-	err = l.svcCtx.DB.Debug().Where("id = ?", req.Id).Updates(&models.Device{
-		UserId: req.UserId,
+	rpcReq := &device.ModRequest{
+		Id:     uint32(req.Id),
+		Userid: strconv.Itoa(int(req.UserId)),
 		Name:   req.Name,
-	}).Find(device).Error
-	if err != nil {
-		logx.Error("[DB ERROR]: ", err)
-		resp.Code = 400
-		resp.Msg = err.Error()
-		return resp, err
 	}
-	//Redis cache-out
-	_, err = l.svcCtx.RedisClient.Hdel(define.DevCache, device.Key)
-	if err != nil {
-		logx.Error("[CACHE ERROR]: ", err)
+	rpcRsp, _ := l.svcCtx.RpcDevice.Mod(context.Background(), rpcReq)
+	if rpcRsp.Status != true {
 		resp.Code = 400
-		resp.Msg = err.Error()
+		resp.Msg = "failure"
 		return resp, nil
 	}
+
 	resp.Code = 200
 	resp.Msg = "success"
 	return resp, nil

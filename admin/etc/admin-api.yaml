@@ -6,5 +6,18 @@ UserRpc:
     Hosts:
       - 192.168.0.101:12379
     Key: user.rpc
+<<<<<<< Updated upstream
 Redis:
   Host: 192.168.0.101:6380
+=======
+ProductRpc:
+  Etcd:
+    Hosts:
+      - etcd:2379
+    Key: product.rpc
+DeviceRpc:
+  Etcd:
+    Hosts:
+      - etcd:2379
+    Key: device.rpc
+>>>>>>> Stashed changes
