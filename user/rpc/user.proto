@@ -53,7 +53,7 @@ message DetailResponse{
   string password = 9;
 }
 
-message ModRequest{
+message Data{
   string username = 2;
   string avatar = 3;
   string motto = 4;
@@ -62,6 +62,11 @@ message ModRequest{
   string phone = 7;
   string email = 8;
   string password = 9;
+}
+
+message ModRequest{
+  uint32 id = 1;
+  Data data = 2;
 }
 
 message ModResponse{

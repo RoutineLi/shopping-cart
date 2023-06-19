@@ -5,12 +5,11 @@ import (
 	"encoding/json"
 	"github.com/zeromicro/go-zero/core/threading"
 	"graduate_design/models"
+	"graduate_design/user/rpc/types/user"
 	"strconv"
 
-	"graduate_design/user/rpc/internal/svc"
-	"graduate_design/user/rpc/types/user"
-
 	"github.com/zeromicro/go-zero/core/logx"
+	"graduate_design/user/rpc/internal/svc"
 )
 
 type DetailLogic struct {
@@ -64,7 +63,7 @@ func (l *DetailLogic) Detail(in *user.DetailRequest) (*user.DetailResponse, erro
 
 	threading.GoSafe(func() {
 		temp, _ := json.Marshal(resp)
-		l.svcCtx.RedisClient.Setex(strconv.Itoa(int(in.Id))+"U", string(temp), 30*60)
+		l.svcCtx.RedisClient.SetnxEx(strconv.Itoa(int(in.Id))+"U", string(temp), 30*60)
 	})
 	return resp, nil
 }

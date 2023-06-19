@@ -1,0 +1,17 @@
+syntax = "v1"
+
+service BuyService {
+	@handler BuyService
+	post /api/user/buy_service (BuyRequest) returns (BuyResponse)
+}
+
+type BuyRequest {
+	UserId    int64 `json:"user_id"`
+	ProductId int64 `json:"product_id"`
+}
+
+type BuyResponse {
+	Status  string `json:"status"`
+	Code    uint   `json:"code"`
+	Message string `json:"message"`
+}

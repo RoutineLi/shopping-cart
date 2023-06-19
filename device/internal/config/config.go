@@ -7,11 +7,16 @@ import (
 
 type Config struct {
 	zrpc.RpcServerConf
-	DeviceRPC zrpc.RpcClientConf
-	Mqtt      struct {
+	DeviceRPC  zrpc.RpcClientConf
+	ProductRPC zrpc.RpcClientConf
+	Mqtt       struct {
 		Broker   string
 		ClientID string
 		Password string
 	}
 	RedisCli redis.RedisConf
+	Kafka    struct {
+		Addrs []string
+		Topic string
+	}
 }

@@ -13,18 +13,20 @@ import (
 )
 
 type (
-	AddRequest          = device.AddRequest
-	AddResponse         = device.AddResponse
-	DelRequest          = device.DelRequest
-	DelResponse         = device.DelResponse
-	DetailRequest       = device.DetailRequest
-	DetailResponse      = device.DetailResponse
-	IdsRequest          = device.IdsRequest
-	IdsResponse         = device.IdsResponse
-	ModRequest          = device.ModRequest
-	ModResponse         = device.ModResponse
-	SendMessageRequest  = device.SendMessageRequest
-	SendMessageResponse = device.SendMessageResponse
+	AddRequest             = device.AddRequest
+	AddResponse            = device.AddResponse
+	DelRequest             = device.DelRequest
+	DelResponse            = device.DelResponse
+	DetailByUserIdRequest  = device.DetailByUserIdRequest
+	DetailByUserIdResponse = device.DetailByUserIdResponse
+	DetailRequest          = device.DetailRequest
+	DetailResponse         = device.DetailResponse
+	IdsRequest             = device.IdsRequest
+	IdsResponse            = device.IdsResponse
+	ModRequest             = device.ModRequest
+	ModResponse            = device.ModResponse
+	SendMessageRequest     = device.SendMessageRequest
+	SendMessageResponse    = device.SendMessageResponse
 
 	Device interface {
 		SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error)
@@ -32,6 +34,7 @@ type (
 		Del(ctx context.Context, in *DelRequest, opts ...grpc.CallOption) (*DelResponse, error)
 		Mod(ctx context.Context, in *ModRequest, opts ...grpc.CallOption) (*ModResponse, error)
 		Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error)
+		DetailByUserId(ctx context.Context, in *DetailByUserIdRequest, opts ...grpc.CallOption) (*DetailByUserIdResponse, error)
 		Ids(ctx context.Context, in *IdsRequest, opts ...grpc.CallOption) (*IdsResponse, error)
 	}
 
@@ -69,6 +72,11 @@ func (m *defaultDevice) Mod(ctx context.Context, in *ModRequest, opts ...grpc.Ca
 func (m *defaultDevice) Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error) {
 	client := device.NewDeviceClient(m.cli.Conn())
 	return client.Detail(ctx, in, opts...)
+}
+
+func (m *defaultDevice) DetailByUserId(ctx context.Context, in *DetailByUserIdRequest, opts ...grpc.CallOption) (*DetailByUserIdResponse, error) {
+	client := device.NewDeviceClient(m.cli.Conn())
+	return client.DetailByUserId(ctx, in, opts...)
 }
 
 func (m *defaultDevice) Ids(ctx context.Context, in *IdsRequest, opts ...grpc.CallOption) (*IdsResponse, error) {

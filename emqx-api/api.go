@@ -12,7 +12,11 @@ import (
 func CreateAuthUser(in *CreateAuthUserRequest) error {
 	data, _ := json.Marshal(in)
 	body := bytes.NewReader(data)
-	rep, err := http.Post(define.EmqxAddr+"/authentication/password_based%3Abuilt_in_database/users", "application/json", body)
+	req, _ := http.NewRequest(http.MethodPost, define.EmqxAddr+"/authentication/password_based%3Abuilt_in_database/users", body)
+	req.Header.Set("Content-Type", "application/json")
+	req.SetBasicAuth(define.EmqxKey, define.EmqxSec)
+	client := http.Client{}
+	rep, err := client.Do(req)
 	if err != nil {
 		return err
 	}
@@ -30,7 +34,8 @@ func CreateAuthUser(in *CreateAuthUserRequest) error {
 
 func DeleteAuthUser(clientId string) error {
 	req, _ := http.NewRequest(http.MethodDelete, define.EmqxAddr+"/authentication/password_based%3Abuilt_in_database/users/"+clientId, nil)
-	req.Header.Set("Authorization", "basic/bearer")
+	req.Header.Set("Content-Type", "application/json")
+	req.SetBasicAuth(define.EmqxKey, define.EmqxSec)
 	client := http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {

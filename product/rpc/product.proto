@@ -10,7 +10,17 @@ service Product{
   rpc Detail(DetailRequest) returns (DetailResponse);
   rpc Categories(CategoriesRequest) returns (CategoriesResponse);
   rpc Ids(IdsRequest) returns (IdsResponse);
+  rpc CheckAndUpdateStocks(CAURequest) returns (CAUResponse);
 }
+
+message CAURequest{
+  uint32 pid = 1;
+}
+
+message CAUResponse{
+
+}
+
 
 message AddRequest{
   // @inject_tag: json:"name"
@@ -54,6 +64,7 @@ message DelResponse{
 }
 
 message ModRequest{
+  int32 count = 3; // 做扣减库存操作时的修改数量
   uint32 Id = 1;
   AddRequest Data = 2;
 }

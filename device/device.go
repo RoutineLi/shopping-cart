@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/zeromicro/go-zero/core/logx"
 	"graduate_design/device/internal/mqtt"
 
 	"graduate_design/device/internal/config"
@@ -21,7 +22,7 @@ var configFile = flag.String("f", "etc/device.yaml", "the config file")
 
 func main() {
 	flag.Parse()
-
+	logx.DisableStat()
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
 	ctx := svc.NewServiceContext(c)
@@ -35,7 +36,7 @@ func main() {
 	})
 	defer s.Stop()
 
-	go mqtt.NewMqttServer(c.Mqtt.Broker, c.Mqtt.ClientID, c.Mqtt.Password)
+	go mqtt.NewMqttServer(c.Mqtt.Broker, c.Mqtt.ClientID, c.Mqtt.Password, ctx)
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
 	s.Start()

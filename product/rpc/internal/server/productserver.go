@@ -51,3 +51,8 @@ func (s *ProductServer) Ids(ctx context.Context, in *product.IdsRequest) (*produ
 	l := logic.NewIdsLogic(ctx, s.svcCtx)
 	return l.Ids(in)
 }
+
+func (s *ProductServer) CheckAndUpdateStocks(ctx context.Context, in *product.CAURequest) (*product.CAUResponse, error) {
+	l := logic.NewCheckAndUpdateStocksLogic(ctx, s.svcCtx)
+	return l.CheckAndUpdateStocks(in)
+}

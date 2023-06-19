@@ -6,12 +6,11 @@ import (
 	"errors"
 	"graduate_design/models"
 	"graduate_design/pkg"
+	"graduate_design/user/rpc/types/user"
 	"sort"
 
-	"graduate_design/user/rpc/internal/svc"
-	"graduate_design/user/rpc/types/user"
-
 	"github.com/zeromicro/go-zero/core/logx"
+	"graduate_design/user/rpc/internal/svc"
 )
 
 type OpenAuthLogic struct {

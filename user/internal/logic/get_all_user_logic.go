@@ -2,11 +2,11 @@ package logic
 
 import (
 	"context"
+	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/mr"
 	"graduate_design/user/internal/svc"
 	"graduate_design/user/internal/types"
 	"graduate_design/user/rpc/types/user"
-
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type GetAllUserLogic struct {
@@ -33,11 +33,17 @@ func (l *GetAllUserLogic) GetAllUser(req *types.GetAllUserRequest) (resp *types.
 		return nil, err
 	}
 	uids = rsp.Ids
-
-	for _, id := range uids {
-		in := &user.DetailRequest{Id: id}
-		out, _ := l.svcCtx.RpcUser.Detail(context.Background(), in)
-		item := &types.UserBasic{
+	us, err := mr.MapReduce(func(source chan<- interface{}) {
+		for _, uid := range uids {
+			source <- uid
+		}
+	}, func(item interface{}, writer mr.Writer[*types.UserBasic], cancel func(error)) {
+		id := item.(uint32)
+		out, err := l.svcCtx.RpcUser.Detail(l.ctx, &user.DetailRequest{Id: id})
+		if err != nil {
+			return
+		}
+		u := &types.UserBasic{
 			Id:       uint(out.Id),
 			Avatar:   out.Avatar,
 			Nickname: out.Username,
@@ -48,9 +54,18 @@ func (l *GetAllUserLogic) GetAllUser(req *types.GetAllUserRequest) (resp *types.
 			Email:    out.Email,
 			Password: out.Password,
 		}
-		resp.Data = append(resp.Data, item)
+		writer.Write(u)
+	}, func(pipe <-chan *types.UserBasic, writer mr.Writer[[]*types.UserBasic], cancel func(error)) {
+		var r []*types.UserBasic
+		for u := range pipe {
+			r = append(r, u)
+		}
+		writer.Write(r)
+	})
+	if err != nil {
+		return nil, err
 	}
-
+	resp.Data = us
 	resp.Status = "success"
 	resp.Code = 200
 	resp.Message = "get user all ok"

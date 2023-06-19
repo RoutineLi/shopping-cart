@@ -1,0 +1,16 @@
+Kafka:
+  Name: buy-msg,
+  Brokers:
+    - kafka3:9092
+  Topic: buy-topic
+  Group: buy-group
+ProductRPC:
+  Etcd:
+    Hosts:
+      - etcd:2379
+    Key: product.rpc
+OrderRPC:
+  Etcd:
+    Hosts:
+      - etcd:2379
+    Key: order.rpc

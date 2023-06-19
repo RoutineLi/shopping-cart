@@ -1,0 +1,26 @@
+Name: buy.rpc
+ListenOn: 0.0.0.0:8120
+Etcd:
+  Hosts:
+  - etcd:2379
+  Key: buy.rpc
+ProductRPC:
+  Etcd:
+    Hosts:
+      - etcd:2379
+    Key: product.rpc
+Kafka:
+  Addrs:
+    - kafka3:9092
+  Topic: buy-topic
+
+Prometheus:
+  Host: 0.0.0.0
+  Port: 10120
+  Path: /metrics
+
+Telemetry:
+  Name: buy.rpc
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger

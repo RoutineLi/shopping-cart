@@ -1,0 +1,23 @@
+service websocket-api {
+	@handler GetShoppingListHandler
+	get /api/commodity/shopping_list (GetShoppingListRequest) returns (GetShoppingListResponse)
+	
+	@handler CustomerServiceChatHandler
+	get /api/user/service_chat (CustomerServiceChatRequest) returns (CustomerServiceChatResponse)
+}
+
+type GetShoppingListRequest{}
+
+type GetShoppingListResponse {
+	Status  string `json:"status"`
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}
+
+type CustomerServiceChatRequest{}
+
+type CustomerServiceChatResponse {
+	Status  string `json:"status"`
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}

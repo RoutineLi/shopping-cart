@@ -5,7 +5,6 @@ package userclient
 
 import (
 	"context"
-
 	"graduate_design/user/rpc/types/user"
 
 	"github.com/zeromicro/go-zero/zrpc"
@@ -13,6 +12,7 @@ import (
 )
 
 type (
+	Data             = user.Data
 	DetailRequest    = user.DetailRequest
 	DetailResponse   = user.DetailResponse
 	IdsRequest       = user.IdsRequest

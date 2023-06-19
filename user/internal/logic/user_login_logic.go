@@ -42,10 +42,10 @@ func (l *UserLoginLogic) UserLogin(req *types.UserLoginRequest) (resp *types.Use
 		GenErrorResponse(resp, err)
 		return resp, err
 	}
-	token, err := pkg.GenJwtToken(claim.IsAdmin, claim.Password, claim.Nickname, 3600*24*30)
+	token, err := pkg.GenJwtToken(claim.IsAdmin, claim.Password, claim.Nickname, 3600*24*30, claim.Id)
 	if err != nil {
 		logx.Error("[DB ERROR]: ", err)
-		err = errors.New("用户名密码不正确")
+		err = errors.New("token error")
 		GenErrorResponse(resp, err)
 		return resp, err
 	}

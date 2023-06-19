@@ -72,9 +72,16 @@ func (l *DetailLogic) Detail(in *product.DetailRequest) (*product.DetailResponse
 		Longitude:     claim.Longitude,
 		Location:      claim.Location,
 	}
+
 	threading.GoSafe(func() {
 		temp, _ := json.Marshal(resp.Data)
-		l.svcCtx.RedisClient.Setex(strconv.Itoa(int(in.Id))+"P", string(temp), 30*60)
+		l.svcCtx.RedisClient.SetnxEx(strconv.Itoa(int(in.Id))+"P", string(temp), 30*60)
+		//stock cache
+		//m := map[string]string{
+		//	"total":  strconv.Itoa(claim.Count),
+		//	"secbuy": "0",
+		//}
+		//l.svcCtx.RedisClient.Hmset("stock:"+strconv.Itoa(int(claim.Id)), m)
 	})
 	return resp, nil
 }

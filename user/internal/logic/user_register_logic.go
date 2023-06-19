@@ -2,8 +2,12 @@ package logic
 
 import (
 	"context"
+	"encoding/json"
+	"github.com/zeromicro/go-zero/core/threading"
+	"graduate_design/define"
 	"graduate_design/models"
 	"graduate_design/pkg"
+	"strconv"
 
 	"graduate_design/user/internal/svc"
 	"graduate_design/user/internal/types"
@@ -42,9 +46,15 @@ func (l *UserRegisterLogic) UserRegister(req *types.UserRegisterRequest) (resp *
 			IsAdmin:  req.IsAdmin,
 		}
 		l.svcCtx.DB.Create(&claim)
+		threading.GoSafe(func() {
+			temp, _ := json.Marshal(claim)
+			l.svcCtx.RedisClient.Sadd(define.UserIdsCache, strconv.Itoa(int(claim.Id)))
+			l.svcCtx.RedisClient.Setex(strconv.Itoa(int(claim.Id))+"U", string(temp), 30*60)
+		})
 		resp.Code = 200
 		resp.Status = "success"
 		resp.Message = "Registration successful"
+
 		return resp, nil
 	} else {
 		resp.Code = 400

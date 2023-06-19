@@ -9,6 +9,7 @@ service Device{
   rpc Del(DelRequest) returns (DelResponse);
   rpc Mod(ModRequest) returns (ModResponse);
   rpc Detail(DetailRequest) returns (DetailResponse);
+  rpc DetailByUserId(DetailByUserIdRequest) returns (DetailByUserIdResponse);
   rpc Ids(IdsRequest) returns (IdsResponse);
 }
 
@@ -66,4 +67,17 @@ message IdsRequest{
 
 message IdsResponse{
   repeated uint32 ids = 1;
+}
+
+message DetailByUserIdRequest{
+  string userid = 1;
+}
+
+message DetailByUserIdResponse{
+  uint32 id = 5;
+  string name = 1;
+  string userid = 2;
+  string key = 3;
+  string secret = 6;
+  int64 lastonlinetime = 4;
 }

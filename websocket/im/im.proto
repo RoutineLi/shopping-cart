@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package im;
+option go_package = "./websocket";
+
+message SendMessageRequest{
+  string msg = 1;
+  string sendid = 2;
+  string recvid = 3;
+  int64 sendtime = 4;
+}
+
+message SendMessageResponse{
+  string status = 1;
+  uint32 code = 2;
+}
+
+message RecvMessageRequest{
+  string recvid = 1;
+}
+
+message RecvMessageResponse{
+  SendMessageRequest data = 1;
+}
+
+service IM{
+  rpc SendMessage(SendMessageRequest) returns (SendMessageResponse);
+  rpc RecvMessage(RecvMessageRequest) returns (RecvMessageResponse);
+}

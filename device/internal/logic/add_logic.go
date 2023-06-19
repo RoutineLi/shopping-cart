@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/zeromicro/go-zero/core/threading"
 	"gorm.io/gorm"
+	"graduate_design/define"
 	emqx_api "graduate_design/emqx-api"
 	"graduate_design/models"
 	"graduate_design/pkg"
@@ -58,7 +59,9 @@ func (l *AddLogic) Add(in *device.AddRequest) (*device.AddResponse, error) {
 
 		threading.GoSafe(func() {
 			data, _ := json.Marshal(device)
-			l.svcCtx.RedisClient.Setex(strconv.Itoa(int(device.Id))+"D", string(data), 30*60)
+			l.svcCtx.RedisClient.SetnxEx(strconv.Itoa(int(device.Id))+"D", string(data), 30*60)
+			l.svcCtx.RedisClient.SetnxEx(strconv.Itoa(int(device.UserId))+"BY_USERID", string(data), 30*60)
+			l.svcCtx.RedisClient.Sadd(define.DevIdsCache, strconv.Itoa(int(device.Id)))
 		})
 		return nil
 	})

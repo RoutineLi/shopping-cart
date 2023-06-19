@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"github.com/zeromicro/go-zero/core/mr"
 	"graduate_design/product/rpc/types/product"
 
 	"graduate_design/admin/internal/svc"
@@ -25,21 +26,31 @@ func NewProductListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Produ
 }
 
 func (l *ProductListLogic) ProductList(req *types.ProductListRequest) (resp *types.ProductListResponse, err error) {
-	list := make([]*types.Product, 0)
 	resp = new(types.ProductListResponse)
 	count := 0
+	var pids []uint32
 	rpcRsp, _ := l.svcCtx.RpcProduct.Ids(context.Background(), &product.IdsRequest{})
 	if len(rpcRsp.Ids) == 0 {
 		return resp, nil
 	}
-
 	for i := int((req.Page - 1) * req.Size); i < len(rpcRsp.Ids); i++ {
 		if count == int(req.Size) {
 			break
 		}
-		in := &product.DetailRequest{Id: rpcRsp.Ids[i]}
-		out, _ := l.svcCtx.RpcProduct.Detail(context.Background(), in)
-		item := &types.Product{
+		pids = append(pids, rpcRsp.Ids[i])
+		count++
+	}
+	ps, err := mr.MapReduce(func(source chan<- interface{}) {
+		for _, pid := range pids {
+			source <- pid
+		}
+	}, func(item interface{}, writer mr.Writer[*types.Product], cancel func(error)) {
+		id := item.(uint32)
+		out, err := l.svcCtx.RpcProduct.Detail(l.ctx, &product.DetailRequest{Id: id})
+		if err != nil {
+			return
+		}
+		p := &types.Product{
 			Name:          out.Data.Name,
 			Img:           out.Data.Img,
 			Price:         out.Data.Price,
@@ -54,11 +65,19 @@ func (l *ProductListLogic) ProductList(req *types.ProductListRequest) (resp *typ
 			Longitude:     out.Data.Longitude,
 			Location:      out.Data.Location,
 		}
-		list = append(list, item)
-		count++
-	}
+		writer.Write(p)
+	}, func(pipe <-chan *types.Product, writer mr.Writer[[]*types.Product], cancel func(error)) {
+		var r []*types.Product
+		for p := range pipe {
+			r = append(r, p)
+		}
+		writer.Write(r)
+	})
 
-	resp.Count = int64(len(list))
-	resp.List = list
+	if err != nil {
+		return nil, err
+	}
+	resp.Count = int64(count)
+	resp.List = ps
 	return resp, nil
 }

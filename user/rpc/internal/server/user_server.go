@@ -5,10 +5,10 @@ package server
 
 import (
 	"context"
+	"graduate_design/user/rpc/types/user"
 
 	"graduate_design/user/rpc/internal/logic"
 	"graduate_design/user/rpc/internal/svc"
-	"graduate_design/user/rpc/types/user"
 )
 
 type UserServer struct {

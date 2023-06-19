@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/golang-jwt/jwt/v4"
 	"graduate_design/define"
+	"hash/fnv"
 	"strings"
 	"time"
 )
@@ -14,11 +15,12 @@ func Md5(s string) string {
 	return fmt.Sprintf("%x", md5.Sum([]byte(s)))
 }
 
-func GenJwtToken(isAdmin uint, password, name string, second int) (string, error) {
+func GenJwtToken(isAdmin uint, password, name string, second int, userid uint) (string, error) {
 	claims := define.UserClaim{
 		IsAdmin:  isAdmin,
 		Password: password,
 		Name:     name,
+		Id:       userid,
 		RegisteredClaims: jwt.RegisteredClaims{
 			Issuer:    "38384-SearchEngine",
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Second * time.Duration(second))),
@@ -59,4 +61,15 @@ func RFC3339ToNormalTime(rfc3339 string) string {
 		return rfc3339
 	}
 	return strings.Split(rfc3339, "T")[0] + " " + strings.Split(rfc3339, "T")[1][:8]
+}
+
+func UuidToHash(uuid string) int64 {
+	hasher := fnv.New64a()
+	// 将UUID字符串转换为字节数组
+	bytes := []byte(uuid)
+	// 写入字节数组
+	hasher.Write(bytes)
+	// 计算哈希码
+	hashValue := hasher.Sum64()
+	return int64(hashValue)
 }

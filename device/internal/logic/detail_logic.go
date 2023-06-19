@@ -59,7 +59,7 @@ func (l *DetailLogic) Detail(in *device.DetailRequest) (*device.DetailResponse, 
 
 	threading.GoSafe(func() {
 		temp, _ := json.Marshal(resp)
-		l.svcCtx.RedisClient.Setex(strconv.Itoa(int(in.Id))+"D", string(temp), 30*60)
+		l.svcCtx.RedisClient.SetnxEx(strconv.Itoa(int(in.Id))+"D", string(temp), 30*60)
 	})
 	return resp, nil
 }

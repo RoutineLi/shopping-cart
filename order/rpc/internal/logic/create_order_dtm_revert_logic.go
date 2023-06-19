@@ -1,0 +1,30 @@
+package logic
+
+import (
+	"context"
+
+	"graduate_design/order/rpc/internal/svc"
+	"graduate_design/order/rpc/types/order"
+
+	"github.com/zeromicro/go-zero/core/logx"
+)
+
+type CreateOrderDTMRevertLogic struct {
+	ctx    context.Context
+	svcCtx *svc.ServiceContext
+	logx.Logger
+}
+
+func NewCreateOrderDTMRevertLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateOrderDTMRevertLogic {
+	return &CreateOrderDTMRevertLogic{
+		ctx:    ctx,
+		svcCtx: svcCtx,
+		Logger: logx.WithContext(ctx),
+	}
+}
+
+func (l *CreateOrderDTMRevertLogic) CreateOrderDTMRevert(in *order.AddOrderRequest) (*order.AddOrderResponse, error) {
+	// todo: add your logic here and delete this line
+
+	return &order.AddOrderResponse{}, nil
+}

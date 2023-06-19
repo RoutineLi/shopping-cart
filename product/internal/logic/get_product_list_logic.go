@@ -2,13 +2,12 @@ package logic
 
 import (
 	"context"
-	"graduate_design/product/rpc/types/product"
-	"strconv"
-
+	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/mr"
 	"graduate_design/product/internal/svc"
 	"graduate_design/product/internal/types"
-
-	"github.com/zeromicro/go-zero/core/logx"
+	"graduate_design/product/rpc/types/product"
+	"strconv"
 )
 
 type GetProductListLogic struct {
@@ -38,11 +37,17 @@ func (l *GetProductListLogic) GetProductList(req *types.GetProductListRequest) (
 		return resp, err
 	}
 	pids = rsp.Ids
-
-	for _, id := range pids {
-		in := &product.DetailRequest{Id: id}
-		out, _ := l.svcCtx.Product.Detail(context.Background(), in)
-		item := &types.Product{
+	ps, err := mr.MapReduce(func(source chan<- interface{}) {
+		for _, pid := range pids {
+			source <- pid
+		}
+	}, func(item interface{}, writer mr.Writer[*types.Product], cancel func(error)) {
+		id := item.(uint32)
+		out, err := l.svcCtx.Product.Detail(l.ctx, &product.DetailRequest{Id: id})
+		if err != nil {
+			return
+		}
+		p := &types.Product{
 			Id:            uint(out.Data.Id),
 			Name:          out.Data.Name,
 			Img:           out.Data.Img,
@@ -58,11 +63,22 @@ func (l *GetProductListLogic) GetProductList(req *types.GetProductListRequest) (
 			Longitude:     out.Data.Longitude,
 			Location:      out.Data.Location,
 		}
-		resp.Data = append(resp.Data, item)
+		writer.Write(p)
+	}, func(pipe <-chan *types.Product, writer mr.Writer[[]*types.Product], cancel func(error)) {
+		var r []*types.Product
+		for p := range pipe {
+			r = append(r, p)
+		}
+		writer.Write(r)
+	})
+	if err != nil {
+		return nil, err
 	}
 
 	resp.Status = "success"
 	resp.Code = 200
+	resp.Data = ps
 	resp.Message = "获取全部商品成功, count = " + strconv.Itoa(len(resp.Data))
+
 	return resp, nil
 }

@@ -1,0 +1,22 @@
+Name: im.rpc
+ListenOn: 0.0.0.0:9001
+Etcd:
+  Hosts:
+  - etcd:2379
+  Key: im.rpc
+
+Kafka:
+  Addrs:
+    - kafka2:9092
+  Topic: im-offline-topic
+
+Prometheus:
+  Host: 0.0.0.0
+  Port: 10001
+  Path: /metrics
+
+Telemetry:
+  Name: im.rpc
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger

@@ -37,7 +37,7 @@ type GetProductListResponse struct {
 type Product struct {
 	Id            uint    `json:"id"`
 	Name          string  `json:"name"`
-	Img           string  `json:"img"`
+	Img           string  `json:"image"`
 	Price         float64 `json:"price"`
 	Origin        string  `json:"origin"`
 	Brand         string  `json:"brand"`

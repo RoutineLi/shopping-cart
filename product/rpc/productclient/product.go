@@ -15,6 +15,8 @@ import (
 type (
 	AddRequest         = product.AddRequest
 	AddResponse        = product.AddResponse
+	CAURequest         = product.CAURequest
+	CAUResponse        = product.CAUResponse
 	CategoriesRequest  = product.CategoriesRequest
 	CategoriesResponse = product.CategoriesResponse
 	DelRequest         = product.DelRequest
@@ -34,6 +36,7 @@ type (
 		Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error)
 		Categories(ctx context.Context, in *CategoriesRequest, opts ...grpc.CallOption) (*CategoriesResponse, error)
 		Ids(ctx context.Context, in *IdsRequest, opts ...grpc.CallOption) (*IdsResponse, error)
+		CheckAndUpdateStocks(ctx context.Context, in *CAURequest, opts ...grpc.CallOption) (*CAUResponse, error)
 	}
 
 	defaultProduct struct {
@@ -75,4 +78,9 @@ func (m *defaultProduct) Categories(ctx context.Context, in *CategoriesRequest, 
 func (m *defaultProduct) Ids(ctx context.Context, in *IdsRequest, opts ...grpc.CallOption) (*IdsResponse, error) {
 	client := product.NewProductClient(m.cli.Conn())
 	return client.Ids(ctx, in, opts...)
+}
+
+func (m *defaultProduct) CheckAndUpdateStocks(ctx context.Context, in *CAURequest, opts ...grpc.CallOption) (*CAUResponse, error) {
+	client := product.NewProductClient(m.cli.Conn())
+	return client.CheckAndUpdateStocks(ctx, in, opts...)
 }

@@ -4,11 +4,11 @@ import (
 	"context"
 	"errors"
 	"graduate_design/pkg"
-
-	"graduate_design/user/rpc/internal/svc"
 	"graduate_design/user/rpc/types/user"
+	"strconv"
 
 	"github.com/zeromicro/go-zero/core/logx"
+	"graduate_design/user/rpc/internal/svc"
 )
 
 type AuthLogic struct {
@@ -37,7 +37,8 @@ func (l *AuthLogic) Auth(in *user.UserAuthRequest) (*user.UserAuthResponse, erro
 	resp.Password = userClaim.Password
 	resp.IsAdmin = uint64(userClaim.IsAdmin)
 	resp.Extend = map[string]string{
-		"name": userClaim.Name,
+		"name":   userClaim.Name,
+		"userid": strconv.Itoa(int(userClaim.Id)),
 	}
 	return resp, nil
 }

@@ -19,12 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Product_Add_FullMethodName        = "/product.Product/Add"
-	Product_Del_FullMethodName        = "/product.Product/Del"
-	Product_Mod_FullMethodName        = "/product.Product/Mod"
-	Product_Detail_FullMethodName     = "/product.Product/Detail"
-	Product_Categories_FullMethodName = "/product.Product/Categories"
-	Product_Ids_FullMethodName        = "/product.Product/Ids"
+	Product_Add_FullMethodName                  = "/product.Product/Add"
+	Product_Del_FullMethodName                  = "/product.Product/Del"
+	Product_Mod_FullMethodName                  = "/product.Product/Mod"
+	Product_Detail_FullMethodName               = "/product.Product/Detail"
+	Product_Categories_FullMethodName           = "/product.Product/Categories"
+	Product_Ids_FullMethodName                  = "/product.Product/Ids"
+	Product_CheckAndUpdateStocks_FullMethodName = "/product.Product/CheckAndUpdateStocks"
 )
 
 // ProductClient is the client API for Product service.
@@ -37,6 +38,7 @@ type ProductClient interface {
 	Detail(ctx context.Context, in *DetailRequest, opts ...grpc.CallOption) (*DetailResponse, error)
 	Categories(ctx context.Context, in *CategoriesRequest, opts ...grpc.CallOption) (*CategoriesResponse, error)
 	Ids(ctx context.Context, in *IdsRequest, opts ...grpc.CallOption) (*IdsResponse, error)
+	CheckAndUpdateStocks(ctx context.Context, in *CAURequest, opts ...grpc.CallOption) (*CAUResponse, error)
 }
 
 type productClient struct {
@@ -101,6 +103,15 @@ func (c *productClient) Ids(ctx context.Context, in *IdsRequest, opts ...grpc.Ca
 	return out, nil
 }
 
+func (c *productClient) CheckAndUpdateStocks(ctx context.Context, in *CAURequest, opts ...grpc.CallOption) (*CAUResponse, error) {
+	out := new(CAUResponse)
+	err := c.cc.Invoke(ctx, Product_CheckAndUpdateStocks_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ProductServer is the server API for Product service.
 // All implementations must embed UnimplementedProductServer
 // for forward compatibility
@@ -111,6 +122,7 @@ type ProductServer interface {
 	Detail(context.Context, *DetailRequest) (*DetailResponse, error)
 	Categories(context.Context, *CategoriesRequest) (*CategoriesResponse, error)
 	Ids(context.Context, *IdsRequest) (*IdsResponse, error)
+	CheckAndUpdateStocks(context.Context, *CAURequest) (*CAUResponse, error)
 	mustEmbedUnimplementedProductServer()
 }
 
@@ -135,6 +147,9 @@ func (UnimplementedProductServer) Categories(context.Context, *CategoriesRequest
 }
 func (UnimplementedProductServer) Ids(context.Context, *IdsRequest) (*IdsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Ids not implemented")
+}
+func (UnimplementedProductServer) CheckAndUpdateStocks(context.Context, *CAURequest) (*CAUResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckAndUpdateStocks not implemented")
 }
 func (UnimplementedProductServer) mustEmbedUnimplementedProductServer() {}
 
@@ -257,6 +272,24 @@ func _Product_Ids_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Product_CheckAndUpdateStocks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CAURequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ProductServer).CheckAndUpdateStocks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Product_CheckAndUpdateStocks_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ProductServer).CheckAndUpdateStocks(ctx, req.(*CAURequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Product_ServiceDesc is the grpc.ServiceDesc for Product service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -287,6 +320,10 @@ var Product_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Ids",
 			Handler:    _Product_Ids_Handler,
+		},
+		{
+			MethodName: "CheckAndUpdateStocks",
+			Handler:    _Product_CheckAndUpdateStocks_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

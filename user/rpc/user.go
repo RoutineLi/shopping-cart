@@ -3,10 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-
-	"graduate_design/user/rpc/internal/config"
-	"graduate_design/user/rpc/internal/server"
-	"graduate_design/user/rpc/internal/svc"
 	"graduate_design/user/rpc/types/user"
 
 	"github.com/zeromicro/go-zero/core/conf"
@@ -14,6 +10,9 @@ import (
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+	"graduate_design/user/rpc/internal/config"
+	"graduate_design/user/rpc/internal/server"
+	"graduate_design/user/rpc/internal/svc"
 )
 
 var configFile = flag.String("f", "etc/user.yaml", "the config file")

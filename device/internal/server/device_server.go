@@ -47,6 +47,11 @@ func (s *DeviceServer) Detail(ctx context.Context, in *device.DetailRequest) (*d
 	return l.Detail(in)
 }
 
+func (s *DeviceServer) DetailByUserId(ctx context.Context, in *device.DetailByUserIdRequest) (*device.DetailByUserIdResponse, error) {
+	l := logic.NewDetailByUserIdLogic(ctx, s.svcCtx)
+	return l.DetailByUserId(in)
+}
+
 func (s *DeviceServer) Ids(ctx context.Context, in *device.IdsRequest) (*device.IdsResponse, error) {
 	l := logic.NewIdsLogic(ctx, s.svcCtx)
 	return l.Ids(in)

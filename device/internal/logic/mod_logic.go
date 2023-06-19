@@ -38,6 +38,7 @@ func (l *ModLogic) Mod(in *device.ModRequest) (*device.ModResponse, error) {
 	}
 	threading.GoSafe(func() {
 		l.svcCtx.RedisClient.Del(strconv.Itoa(int(in.Id)) + "D")
+		l.svcCtx.RedisClient.Del(strconv.Itoa(userid) + "BY_USERID")
 	})
 	return &device.ModResponse{Status: true}, nil
 }

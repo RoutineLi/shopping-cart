@@ -29,7 +29,7 @@ func NewIdsLogic(ctx context.Context, svcCtx *svc.ServiceContext) *IdsLogic {
 
 func (l *IdsLogic) Ids(in *product.IdsRequest) (*product.IdsResponse, error) {
 	var pids []uint32
-	items, _ := l.svcCtx.RedisClient.Lrange(define.ProIdsCache, 0, -1)
+	items, _ := l.svcCtx.RedisClient.Smembers(define.ProIdsCache)
 	if len(items) != 0 {
 		for _, x := range items {
 			item, _ := strconv.Atoi(x)
@@ -42,7 +42,9 @@ func (l *IdsLogic) Ids(in *product.IdsRequest) (*product.IdsResponse, error) {
 		return nil, err
 	}
 	threading.GoSafe(func() {
-		l.svcCtx.RedisClient.Lpush(define.ProIdsCache, pids)
+		for _, id := range pids {
+			l.svcCtx.RedisClient.Sadd(define.ProIdsCache, strconv.Itoa(int(id)))
+		}
 	})
 	return &product.IdsResponse{Ids: pids}, nil
 }

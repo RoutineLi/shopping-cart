@@ -22,6 +22,11 @@ Mqtt:
 RedisCli:
   Host: redis:6379
 
+Kafka:
+  Addrs:
+    - kafka1:9092
+  Topic: mqtt-topic
+
 Prometheus:
   Host: 0.0.0.0
   Port: 9020
@@ -32,3 +37,10 @@ Telemetry:
   Endpoint: http://jaeger:14268/api/traces
   Sampler: 1.0
   Batcher: jaeger
+
+#test
+ProductRPC:
+  Etcd:
+    Hosts:
+      - etcd:2379
+    Key: product.rpc

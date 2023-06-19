@@ -1,0 +1,35 @@
+Name: websocket-api
+Host: 0.0.0.0
+Port: 8080
+UserRpc:
+  Etcd:
+    Hosts:
+      - etcd:2379
+    Key: user.rpc
+DeviceRpc:
+  Etcd:
+    Hosts:
+      - etcd:2379
+    Key: device.rpc
+#ImRpc:
+#  Etcd:
+#    Hosts:
+#      - etcd:2379
+#    Key: im.rpc
+
+Kafka:
+  Name: mqtt-msg,
+  Brokers:
+    - kafka1:9092
+  Topic: mqtt-topic
+  Group: mqtt-group
+
+Prometheus:
+  Host: 0.0.0.0
+  Port: 9080
+  Path: /metrics
+Telemetry:
+  Name: websocket.api
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger

@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/zeromicro/go-zero/core/logx"
 
 	"graduate_design/product/rpc/internal/config"
 	"graduate_design/product/rpc/internal/server"
@@ -20,7 +21,7 @@ var configFile = flag.String("f", "etc/product.yaml", "the config file")
 
 func main() {
 	flag.Parse()
-
+	logx.DisableStat()
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
 	ctx := svc.NewServiceContext(c)

@@ -2,15 +2,13 @@ package logic
 
 import (
 	"context"
+	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/threading"
 	"graduate_design/define"
 	"graduate_design/models"
-	"strconv"
-
 	"graduate_design/user/rpc/internal/svc"
 	"graduate_design/user/rpc/types/user"
-
-	"github.com/zeromicro/go-zero/core/logx"
+	"strconv"
 )
 
 type IdsLogic struct {
@@ -29,7 +27,7 @@ func NewIdsLogic(ctx context.Context, svcCtx *svc.ServiceContext) *IdsLogic {
 
 func (l *IdsLogic) Ids(in *user.IdsRequest) (*user.IdsResponse, error) {
 	var uids []uint32
-	items, _ := l.svcCtx.RedisClient.Lrange(define.UserIdsCache, 0, -1)
+	items, _ := l.svcCtx.RedisClient.Smembers(define.UserIdsCache)
 	if len(items) != 0 {
 		for _, x := range items {
 			item, _ := strconv.Atoi(x)
@@ -43,7 +41,10 @@ func (l *IdsLogic) Ids(in *user.IdsRequest) (*user.IdsResponse, error) {
 	}
 
 	threading.GoSafe(func() {
-		l.svcCtx.RedisClient.Lpush(define.UserIdsCache, uids)
+		for _, id := range uids {
+			l.svcCtx.RedisClient.Sadd(define.UserIdsCache, strconv.Itoa(int(id)))
+		}
+
 	})
 
 	return &user.IdsResponse{Ids: uids}, nil
